@@ -13,8 +13,8 @@ class UserController extends Controller
 
     public function register(Request $request)
     {
-        $validatedData = $request->validate([
-            'name' => 'required|string|max:255',
+        $data = $request->validate([
+            'name' => 'required|string|max:50',
             'email' => 'required|email|unique:users',
             'password' => 'required|string|min:8',
             'phone' => 'required|string|min:4',
@@ -22,13 +22,14 @@ class UserController extends Controller
             'img_url' => 'nullable|url',
         ]);
 
+        //if user was an admin, handle it
         $user = new User([
-            'name' => $validatedData['name'],
-            'email' => $validatedData['email'],
-            'phone' => $validatedData['phone'],
-            'password' => Hash::make($validatedData['password']),
-            'role_id' => $validatedData['role_id'],
-            'img_url' => $validatedData['img_url'],
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'phone' => $data['phone'],
+            'password' => Hash::make($data['password']),
+            'role_id' => $data['role_id'],
+            'img_url' => $data['img_url'],
         ]);
 
         $user->save();
@@ -70,3 +71,9 @@ class UserController extends Controller
         return response()->json(['message' => 'Logged out successfully'], 201);
     }
 }
+
+// middlewares (role) and policies
+
+// admin can add categories
+
+// admin can manage orders and order responses
