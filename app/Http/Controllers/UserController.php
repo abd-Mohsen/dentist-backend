@@ -2,47 +2,51 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
+use Illuminate\Auth\Events\Registered;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Validation\ValidationException;
 
 class UserController extends Controller
 {
 
-    public function register(Request $request)
+    public function register(Request $request) : JsonResponse
     {
         $data = $request->validate([
             'name' => 'required|string|max:50',
             'email' => 'required|email|unique:users',
             'password' => 'required|string|min:8',
             'phone' => 'required|string|min:4',
-            'role_id' => 'required|exists:roles,id',
-            'img_url' => 'nullable|url',
+            'role' => 'required|in:dentist,supplier',
         ]);
 
+        $role_id = Role::where('title' , $data['role'])->first()->id;
+        
         //if user was an admin, handle it
-        $user = new User([
+        $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'phone' => $data['phone'],
-            'password' => Hash::make($data['password']),
-            'role_id' => $data['role_id'],
-            'img_url' => $data['img_url'],
+            'password' => bcrypt($data['password']),
+            'role_id' => $role_id,
         ]);
 
-        $user->save();
+        event(new Registered($user));
 
         // Optionally, you can log in the user after registration
         // Auth::login($user);
 
-        return response()->json(['message' => 'User registered successfully'], 201);
+        return response()->json([
+            'message' => 'User registered successfully',
+            'acess_token' => $user->createToken("access token")->plainTextToken,
+            ], 201);
     }
 
-    public function login(Request $request)
+    public function login(Request $request) : JsonResponse
     {
-        // Validate the incoming request data
         $request->validate([
             'email' => 'required|email',
             'password' => 'required',
@@ -56,19 +60,19 @@ class UserController extends Controller
         }
 
         $user = $request->user();
-        $token = $user->createToken('api-token')->plainTextToken;
+        //delete user previous tokens
+        $token = $user->createToken('access token')->plainTextToken;
 
-        // Return a response with the user and token details
         return response()->json([
             'user' => $user->id,
             'token' => $token,
         ]);
     }
 
-    public function logout(Request $request)
+    public function logout(Request $request) : JsonResponse
     {
         $request->user()->tokens()->delete();
-        return response()->json(['message' => 'Logged out successfully'], 201);
+        return response()->json(true, 201);
     }
 }
 
