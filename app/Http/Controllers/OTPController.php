@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\OTPMail;
 use App\Mail\TestMail;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -23,7 +24,7 @@ class OTPController extends Controller
         $user = $request->user();
         if (!$user) return response()->json(['message' => 'how tf you got this error'], 400);
         $otp = (new Otp())->generate($user->id, 5, 10);
-        $this->sendOTP($user, 123);
+        $this->sendOTP($user, $otp->token);
 
         return response()->json([
             'message' => 'OTP sent successfully.',
@@ -51,10 +52,10 @@ class OTPController extends Controller
     public function sendResetOTP(Request $request) : JsonResponse
     {
         $user = User::where('email', $request->email)->first();
-        if (!$user) return response()->json(['message' => 'User not found.'], 404);
+        if (!$user) return response()->json(['message' => 'User not found.','email'=>$request->email], 404);
         
-        $otp = Otp::generate($user->id,5,10);
-        $this->sendOTP($user->email, $otp);
+        $otp = (new Otp())->generate($user->id, 5, 10);
+        $this->sendOTP($user, $otp->token);
 
         return response()->json(['message' => 'Reset OTP sent successfully.'],201);
     }
@@ -69,7 +70,7 @@ class OTPController extends Controller
         $user = User::where('email', $request->email)->first();
         if (!$user) return response()->json(['message' => 'no account?'], 400);
         
-        $result = Otp::validate($user->id , $request->otp);
+        $result = (new Otp())->validate($user->id, $request->otp);
 
         if (!$result->status) return response()->json(false, 400);
             
@@ -80,10 +81,16 @@ class OTPController extends Controller
     public function resetPassword(Request $request) : JsonResponse
     {
         $user = User::where('email', $request->email)->first();
-        if (!$user) return response()->json(['message' => 'no account?'], 400);
+        if (!$user) return response()->json(['message' => 'wrong email'], 400);
 
+        // fix password confirmation
         $status = Password::reset(
-            $request->only('email', 'password', 'password_confirmation', 'token'),
+            $request->validate([
+                'email' => 'required|email',
+                'password' => 'required|string|min:8|confirmed',
+                'password_confirmation' => 'required|string|min:8',
+                'token' => 'required|string'
+            ]),
             function (User $user, string $password) {
                 $user->password = bcrypt($password);
                 $user->save();
@@ -105,7 +112,7 @@ class OTPController extends Controller
         //     }
         // );
 
-        Mail::to($user)->send(new TestMail($otp));
+        Mail::to($user->email)->send(new OTPMail($otp));
 
         // Mail::to($email)->send();
         // if(Mail::failures() != 0) return "sent successfully";

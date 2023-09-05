@@ -19,6 +19,7 @@ class UserController extends Controller
             'name' => 'required|string|max:50',
             'email' => 'required|email|unique:users',
             'password' => 'required|string|min:8',
+            'password_confirmation' => 'required|string|min:8',
             'phone' => 'required|string|min:4',
             'role' => 'required|in:dentist,supplier',
         ]);
@@ -35,9 +36,8 @@ class UserController extends Controller
         ]);
 
         event(new Registered($user));
-
-        // Optionally, you can log in the user after registration
-        // Auth::login($user);
+        
+        //use enum for roles
 
         return response()->json([
             'message' => 'User registered successfully',
@@ -60,7 +60,10 @@ class UserController extends Controller
         }
 
         $user = $request->user();
-        //delete user previous tokens
+
+        //delete user previous tokens 
+        $user->tokens()->delete();
+        
         $token = $user->createToken('access token')->plainTextToken;
 
         return response()->json([
@@ -73,6 +76,18 @@ class UserController extends Controller
     {
         $request->user()->tokens()->delete();
         return response()->json(true, 201);
+    }
+
+    public function profile(Request $request) : JsonResponse
+    {
+        $user = $request->user();
+        return new JsonResponse([
+            'name' => $user->name,
+            'email' => $user->email,
+            'phone' => $user->phone,
+            'img_url' => $user->imgUrl,
+            'role' => $user->role(),
+        ]);
     }
 }
 

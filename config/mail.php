@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'default' => env('mailgun', 'smtp'),
+    'default' => env('MAIL_MAILER', 'smtp'),
 
     /*
     |--------------------------------------------------------------------------
@@ -58,6 +58,7 @@ return [
 
         'postmark' => [
             'transport' => 'postmark',
+            'token' => env('POSTMARK_TOKEN'),
             // 'client' => [
             //     'timeout' => 5,
             // ],
@@ -120,5 +121,14 @@ return [
             resource_path('views/vendor/mail'),
         ],
     ],
+
+    // remove if there is an issue
+    'stream' => [
+        'ssl' => [
+            'allow_self_signed' => true,
+            'verify_peer' => false,
+            'verify_peer_name' => false,
+        ],
+    ]
 
 ];

@@ -13,33 +13,33 @@ class TestMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    private $otp;
-
-    
-    public function __construct($otp)
+    public function __construct(public $otp)
     {
-        $this->$otp = $otp;
+        //$this->$otp = $otp=00000;
     }
 
     public function build(){
-        return $this->view('mail', ['otp' => $this->$otp]);
+        return $this->subject('otp code')
+        //->view('email.mail-template')
+        ->text('content');
     }
 
 
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Test Mail',
+            subject: 'otp code',
         );
     }
 
    
-    public function content(): Content
-    {
-        return new Content(
-            view: 'view.name',
-        );
-    }
+    // public function content(): Content
+    // {
+    //     return new Content(
+    //         view: null,
+    //         text: 'content'
+    //     );
+    // }
 
     public function attachments(): array
     {
