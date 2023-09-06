@@ -16,9 +16,9 @@ class UserController extends Controller
     public function register(Request $request) : JsonResponse
     {
         $data = $request->validate([
-            'name' => 'required|string|max:50',
+            'name' => 'required|string|max:50|min:4',
             'email' => 'required|email|unique:users',
-            'password' => 'required|string|min:8',
+            'password' => 'required|string|min:8|confirmed',
             'password_confirmation' => 'required|string|min:8',
             'phone' => 'required|string|min:4',
             'role' => 'required|in:dentist,supplier',
@@ -86,7 +86,8 @@ class UserController extends Controller
             'email' => $user->email,
             'phone' => $user->phone,
             'img_url' => $user->imgUrl,
-            'role' => $user->role(),
+            'role' => $user->role->title,
+            'is_verified' => $user->hasVerifiedEmail(),
         ]);
     }
 }

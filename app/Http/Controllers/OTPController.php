@@ -3,24 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\Mail\OTPMail;
-use App\Mail\TestMail;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Ichtrojan\Otp\Otp;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Auth\Events\Verified;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Auth\Events\PasswordReset;
-use Illuminate\Database\Eloquent\Casts\Json;
 use Illuminate\Http\JsonResponse;
 
 class OTPController extends Controller
 {
     public function sendRegisterOTP(Request $request) : JsonResponse
     {
-        //$user = User::where('email', $request->email)->first();
         $user = $request->user();
         if (!$user) return response()->json(['message' => 'how tf you got this error'], 400);
         $otp = (new Otp())->generate($user->id, 5, 10);
@@ -28,19 +24,18 @@ class OTPController extends Controller
 
         return response()->json([
             'message' => 'OTP sent successfully.',
-            "url" => URL::signedRoute('verification.otp', ['id' => auth()->user()->id]),
+            "url" => URL::signedRoute('verification.otp', ['id' => $user->id]),
         ]);
     }
 
     public function verifyRegisterOTP(Request $request) : JsonResponse
     {
-        //$user = User::where('email', $request->email)->first();
         $user = $request->user();
         $result = (new Otp())->validate($user->id, $request->otp);
 
-        if (!$user) return response()->json(['message' => 'wtf'], 400);
+        if (!$user) return response()->json(['message' => 'you are not authorized'], 401);
         if (!$result->status) return response()->json(false, 400);
-        if ($user->hasVerifiedEmail()) return response()->json(['message' => 'Email already verified'], 400);
+        if ($user->hasVerifiedEmail()) return response()->json(['message' => 'Email already verified'], 403);//if so, go to home
         
         $user->markEmailAsVerified();
         event(new Verified($user));
@@ -52,7 +47,7 @@ class OTPController extends Controller
     public function sendResetOTP(Request $request) : JsonResponse
     {
         $user = User::where('email', $request->email)->first();
-        if (!$user) return response()->json(['message' => 'User not found.','email'=>$request->email], 404);
+        if (!$user) return response()->json(['message' => 'User not found.'], 400);
         
         $otp = (new Otp())->generate($user->id, 5, 10);
         $this->sendOTP($user, $otp->token);
@@ -64,11 +59,11 @@ class OTPController extends Controller
     {
         $request->validate([
             "email"=>"required|email",
-            "otp"=>"required"
+            "otp"=>"required|string"
         ]);
 
         $user = User::where('email', $request->email)->first();
-        if (!$user) return response()->json(['message' => 'no account?'], 400);
+        if (!$user) return response()->json(['message' => 'wrong email'], 400);
         
         $result = (new Otp())->validate($user->id, $request->otp);
 
@@ -83,10 +78,9 @@ class OTPController extends Controller
         $user = User::where('email', $request->email)->first();
         if (!$user) return response()->json(['message' => 'wrong email'], 400);
 
-        // fix password confirmation
         $status = Password::reset(
             $request->validate([
-                'email' => 'required|email',
+                //'email' => 'required|email',
                 'password' => 'required|string|min:8|confirmed',
                 'password_confirmation' => 'required|string|min:8',
                 'token' => 'required|string'
@@ -103,29 +97,8 @@ class OTPController extends Controller
             :  response()->json(["message" => "reset has failed"], 500);
     }
 
-    private function sendOTP($user, $otp)
-    {
-        // Mail::raw(
-        //     "Your OTP is: $otp",
-        //      function ($message) use ($email) {
-        //         $message->to($email)->subject('OTP Verification');
-        //     }
-        // );
-
+    private function sendOTP($user, $otp){
         Mail::to($user->email)->send(new OTPMail($otp));
-
-        // Mail::to($email)->send();
-        // if(Mail::failures() != 0) return "sent successfully";
-        // return "ooops";
-
-        // $mg = Mailgun::create('your-mailgun-api-key'); // Use your Mailgun API key here
-
-        // $mg->messages()->send('your-mailgun-domain', [
-        //     'from' => 'your-email@example.com',
-        //     'to' => $email,
-        //     'subject' => 'OTP Verification',
-        //     'text' => "Your OTP is: $otp",
-        // ]);
     }
 
 }

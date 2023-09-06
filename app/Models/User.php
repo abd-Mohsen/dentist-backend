@@ -10,7 +10,7 @@ use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable;    //consider adding verify token to this table
 
     /**
      * The attributes that are mass assignable.
@@ -34,6 +34,7 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
+        'email_verified_at',
     ];
 
     /**
@@ -47,6 +48,6 @@ class User extends Authenticatable
     ];
 
     public function role(){
-        return Role::find($this->id)->title;
+        return $this->belongsTo(Role::class, 'role_id');
     }
 }
