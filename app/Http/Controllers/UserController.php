@@ -41,7 +41,7 @@ class UserController extends Controller
 
         return response()->json([
             'message' => 'User registered successfully',
-            'acess_token' => $user->createToken("access token")->plainTextToken,
+            'access_token' => $user->createToken("access token")->plainTextToken,
             ], 201);
     }
 
@@ -68,8 +68,8 @@ class UserController extends Controller
 
         return response()->json([
             'user' => $user->id,
-            'token' => $token,
-        ]);
+            'access_token' => $token,
+        ],201);
     }
 
     public function logout(Request $request) : JsonResponse
