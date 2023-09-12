@@ -18,9 +18,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/upload-profile-image', [UserController::class, 'uploadProfileImage']);
 });
 
-Route::post('/send-reset-otp',[OTPController::class,'sendResetOTP'])->middleware('throttle:5,3');
-Route::post('/verify-reset-otp',[OTPController::class,'verifyResetOTP']);
-//->middleware('throttle:3,1');
+Route::post('/send-reset-otp',[OTPController::class,'sendResetOTP'])->middleware('throttle:1,2');
+Route::post('/verify-reset-otp',[OTPController::class,'verifyResetOTP'])->middleware('throttle:3,1');
 Route::post('/reset-password',[OTPController::class,'resetPassword']);
 
 Route::middleware(['auth:sanctum','verified'])->group(function () {
