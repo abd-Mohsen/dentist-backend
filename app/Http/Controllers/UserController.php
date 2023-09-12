@@ -2,16 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Role;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use App\Models\Image as ModelsImage;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Intervention\Image\Facades\Image;
-use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Validation\ValidationException;
 
 class UserController extends Controller
 {
@@ -47,6 +43,39 @@ class UserController extends Controller
         $user->save();
 
         return response()->json(['image' => $image->path], 201);
+    }
+
+    public function editProfile(Request $request) : JsonResponse
+    {
+        $data = $request->validate([
+            'name' => 'required|string|max:50|min:4',
+            'phone' => 'required|string|min:4',
+        ]);
+
+        $user = $request->user();
+
+        $user->name = $data['name'];
+        $user->phone = $data['phone'];
+        $user->save();
+
+        return response()->json(true);
+    }
+
+    public function editPassword(Request $request)
+    {
+        $data = $request->validate([
+            'current_password' => 'required|string',
+            'new_password' => 'required|string|min:8',
+        ]);
+
+        $user = $request->user();
+
+        if (!Hash::check($data['current_password'], $user->password)) {
+            return response()->json(['message' => 'Current password is incorrect'], 400);
+        }
+        $user->password = bcrypt($data['new_password']);
+        $user->save();
+        return response()->json(['message' => 'Password updated successfully']);
     }
 }
 

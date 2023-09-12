@@ -24,5 +24,6 @@ Route::post('/verify-reset-otp',[OTPController::class,'verifyResetOTP']);
 Route::post('/reset-password',[OTPController::class,'resetPassword']);
 
 Route::middleware(['auth:sanctum','verified'])->group(function () {
-    //
+    Route::post('/edit-profile', [UserController::class, 'editProfile']);
+    Route::post('/edit-password', [UserController::class, 'editPassword']);
 });
