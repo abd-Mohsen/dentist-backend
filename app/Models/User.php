@@ -23,7 +23,7 @@ class User extends Authenticatable
         'password',
         'phone',
         'role_id',
-        'img_url',
+        'image_id',
     ];
 
     /**
@@ -33,7 +33,7 @@ class User extends Authenticatable
      */
     protected $hidden = [
         'password',
-        'remember_token',
+        //'remember_token',
         'email_verified_at',
     ];
 
@@ -49,5 +49,11 @@ class User extends Authenticatable
 
     public function role(){
         return $this->belongsTo(Role::class, 'role_id');
+    }
+
+    //add profile pic (fk)
+
+    public function image(){
+        return $this->belongsTo(Image::class, 'image_id');
     }
 }

@@ -80,7 +80,7 @@ class OTPController extends Controller
 
         $status = Password::reset(
             $request->validate([
-                //'email' => 'required|email',
+                'email' => 'required|email',
                 'password' => 'required|string|min:8|confirmed',
                 'password_confirmation' => 'required|string|min:8',
                 'token' => 'required|string'
@@ -91,6 +91,8 @@ class OTPController extends Controller
                 event(new PasswordReset($user));
             }
         );
+
+        //delete all user tokens if success
 
         return $status == Password::PASSWORD_RESET
             ?  response()->json(true, 200)
