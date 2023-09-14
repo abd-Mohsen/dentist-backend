@@ -169,7 +169,6 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         Ichtrojan\Otp\OtpServiceProvider::class,
-        \FlexFlux\LaravelElasticEmail\LaravelElasticEmailServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
     ])->toArray(),
 

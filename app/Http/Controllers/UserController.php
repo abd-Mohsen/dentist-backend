@@ -18,13 +18,13 @@ class UserController extends Controller
             'name' => $user->name,
             'email' => $user->email,
             'phone' => $user->phone,
-            'image' => $user->image->path,
+            'image' => $user->image?->path,
             'role' => $user->role->title,
             'is_verified' => $user->hasVerifiedEmail(),
         ]);
     }
 
-    public function uploadProfileImage(Request $request)
+    public function uploadProfileImage(Request $request) : JsonResponse
     {
         $request->validate(['image' => 'required|image|mimes:jpeg,png,jpg|max:2048']);
 
@@ -61,7 +61,7 @@ class UserController extends Controller
         return response()->json(true);
     }
 
-    public function editPassword(Request $request)
+    public function editPassword(Request $request) : JsonResponse
     {
         $data = $request->validate([
             'current_password' => 'required|string',
