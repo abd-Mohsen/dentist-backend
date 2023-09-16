@@ -51,9 +51,12 @@ class User extends Authenticatable
         return $this->belongsTo(Role::class, 'role_id');
     }
 
-    //add profile pic (fk)
-
     public function image(){
         return $this->belongsTo(Image::class, 'image_id');
+    }
+
+    public function products() //only for suppliers
+    {
+        return $this->hasMany(Product::class);
     }
 }
