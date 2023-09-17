@@ -30,7 +30,7 @@ class UserController extends Controller
 
         $user = $request->user();
 
-        $imgData = Image::make($request->file('image'))->fit(480)->encode('jpg');
+        $imgData = (new Image)->make($request->file('image'))->fit(480)->encode('jpg');
         $fileName = $user->id . '-' . uniqid() . '.jpg';
         Storage::put('public/profile/'.$fileName , $imgData);
 

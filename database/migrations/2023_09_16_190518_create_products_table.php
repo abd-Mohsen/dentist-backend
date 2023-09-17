@@ -23,7 +23,7 @@ class CreateProductsTable extends Migration
             $table->integer('max_purchase_qty');
             $table->integer('min_purchase_qty');
             $table->boolean('active')->default(false);
-            $table->foreignIdFor(User::class); // check if this is right, meaning if the product can belong yo many users based on barcode or not
+            $table->foreignIdFor(User::class); 
             //$table->foreignIdFor(Category::class); //many to many
             $table->foreignIdFor(Brand::class);
             $table->timestamps();

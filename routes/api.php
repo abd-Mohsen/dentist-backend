@@ -28,4 +28,7 @@ Route::middleware(['auth:sanctum','verified'])->group(function () {
     Route::post('/edit-password', [UserController::class, 'editPassword']);
 });
 
-Route::resource('products', ProductController::class);
+Route::apiResources([
+    'products'=> ProductController::class,
+    'categories'=> ProductController::class,
+]);

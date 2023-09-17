@@ -9,6 +9,16 @@ class Category extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'title',
+        'parent_id',
+        'image_id',
+    ];
+
+    public function image(){
+        return $this->belongsTo(Image::class, 'image_id');
+    }
+
     public function products()
     {
         return $this->belongsToMany(Product::class);

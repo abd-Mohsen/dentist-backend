@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('categories', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
+            $table->string('title')->unique();
             $table->foreignIdFor(Image::class)->nullable();
             $table->unsignedBigInteger('parent_id')->nullable();
             $table->softDeletes();
