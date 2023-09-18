@@ -19,7 +19,7 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // generete and check sku uniqueness
     }
 
     /**

@@ -16,18 +16,25 @@ class CreateProductsTable extends Migration
             $table->id();
             $table->string('name');
             $table->text('description');
-            $table->decimal('price', 8, 2);
-            $table->string('barcode')->nullable();
-            $table->integer('quantity');
+            $table->unsignedDecimal('price', 8, 2);
+            $table->unsignedDecimal('weight', 4, 2);//kg
+            $table->unsignedDecimal('length', 6, 2);//m
+            $table->unsignedDecimal('width', 6, 2);//m
+            $table->unsignedDecimal('height', 6, 2);//m
+            $table->string('sku')->unique();
+            $table->string('upc');
+            $table->integer('quantity')->default(0);
             $table->integer('sell_quantity')->default(0);
-            $table->integer('max_purchase_qty');
-            $table->integer('min_purchase_qty');
+            $table->integer('max_purchase_qty')->default(0);
+            $table->integer('min_purchase_qty')->default(0);
             $table->boolean('active')->default(false);
-            $table->foreignIdFor(User::class); 
-            //$table->foreignIdFor(Category::class); //many to many
+            $table->unsignedBigInteger('owner_id'); 
             $table->foreignIdFor(Brand::class);
             $table->timestamps();
             $table->softDeletes();
+            // do comment and rating (opinion) table
+
+            $table->foreign('owner_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

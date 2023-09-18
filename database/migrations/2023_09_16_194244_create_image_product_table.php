@@ -1,9 +1,10 @@
 <?php
 
+use App\Models\Image;
 use App\Models\Product;
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
 
 class CreateImageProductTable extends Migration
 {
@@ -14,6 +15,7 @@ class CreateImageProductTable extends Migration
             $table->id();
             $table->foreignIdFor(Product::class);
             $table->foreignIdFor(Image::class);
+            $table->timestamps();
         });
     }
 

@@ -2,22 +2,54 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Product extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
+
+    protected $dates = ['deleted_at'];
+
+    protected $fillable = [
+        'name', // change to title
+        'description',
+        'price',
+        'weight',
+        'length',
+        'width',
+        'height',
+        'upc',
+        'quantity',
+        'sell_quantity',
+        'max_purchase_qty',
+        'min_purchase_qty',
+        'active',
+        'owner_id',
+        'brand_id',
+        //list of categories (fill in pivot table)
+        //list of images (fill in pivot table)
+    ];
 
     public function categories()
     {
         return $this->belongsToMany(Category::class);
     }
 
-    public function user()
+    public function owner()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'owner_id');
     }
 
-    //prevent adding if barcode exists
+    public function brand()
+    {
+        return $this->belongsTo(Brand::class);
+    }
+
+    public function images()
+    {
+        return $this->belongsToMany(Image::class);
+    }
+
 }
