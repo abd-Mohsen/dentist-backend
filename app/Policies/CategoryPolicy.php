@@ -29,7 +29,7 @@ class CategoryPolicy
      */
     public function create(User $user): bool
     {
-        return $user->role->title === 'admin';
+        return $user->role->title == 'admin';
     }
 
     /**
@@ -43,7 +43,7 @@ class CategoryPolicy
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Category $category): bool
+    public function delete(User $user): bool
     {
         return $user->role->title === 'admin';
     }

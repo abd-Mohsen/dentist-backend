@@ -4,48 +4,54 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use Illuminate\Http\Request;
-use Intervention\Image\Image;
 use Illuminate\Http\JsonResponse;
 use App\Models\Image as ImageModel;
+use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Resources\CategoryResource;
 
 class CategoryController extends Controller
 {
 
-    public function index() : JsonResponse
+    public function index() : JsonResponse //only parents
     {
-        $categories = Category::all();
-        return response()->json($categories);
+        $categories = Category::where('parent_id', null)->get();
+        return response()->json(CategoryResource::collection($categories));
     }
+
+
+
+    public function childCategories() : JsonResponse
+    {
+        $categories = Category::whereNotNull('parent_id')->get();
+        //if ($categories->isEmpty()) return response()->json([]);
+        return response()->json(CategoryResource::collection($categories));
+    }
+
 
 
     public function store(Request $request) : JsonResponse
     {
-        // $user = $request->user();
-        // if($user->role->title != 'admin') return response()->json(['message' => 'admins only'], 403);
-        if($request->user->cannot('create')){
-            return response()->json(['message' => 'admins only'], 403);
-        }
+        $this->authorize('create', Category::class);
 
         $data = $request->validate([
             'title' => 'required|string|max:50|min:4',
             'image' => 'required|image|mimes:jpeg,png,jpg|max:2048',
-            'parent' => 'string|min:4',
+            'parent' => 'nullable|string|min:4',
         ]);
                 
-        $image = $this->uploadImage($request, $data['title']);
-
         //check if parent exists
         $parent = null;
-
         if($data['parent']){
-            $parent = Category::where('title', $data['parent'])->first(); //or fail
+            $parent = Category::where('title', $data['parent'])->first(); 
             if(!$parent) return response()->json(['message' => 'parent category does not exist'], 400);
-        }
+        } 
 
         //check if title is unique
         if(Category::where('title', $data['title'])->first())
          return response()->json(['message' => 'category already exists'], 400);
+
+        $image = $this->uploadImage($request, $data['title']);
         
         Category::create([
             'title' => $data['title'],
@@ -57,35 +63,31 @@ class CategoryController extends Controller
     }
 
 
+
     public function show(string $id) : JsonResponse
     {
-        $category = Category::findOrFail($id);
-        return response()->json($category);
+        $category = Category::with('parent')->findOrFail($id);
+        return response()->json(new CategoryResource($category));
     }
+
 
 
     public function update(Request $request, string $id) : JsonResponse
     {
         $category = Category::findOrFail($id);
-
-        if($request->user->cannot('update')){ // add second parameter $category if there is an error
-            return response()->json(['message' => 'admins only'], 403);
-        }
-
-        $data = $request->validate([
-            'title' => 'string|max:50|min:4',
-            'image' => 'image|mimes:jpeg,png,jpg|max:2048',
-            'parent' => 'string|min:4',
-        ]);
-
-        $image = $data['image'] ? $this->uploadImage($request, $data['title']) : null;
-        // do the same for parent
     
-        $category->fill($request->only([
-            'title',
-            'parent_id',
-             $image?->id,
-        ])); //should parent be edited by admin (if so, dont let it be null)
+        $this->authorize('update', $category);
+    
+        $title = $request->input('title');
+        $image = $request->file('image');
+    
+        if ($title) {
+            $category->title = $title;
+        }
+    
+        if ($image) {
+            $category->image_id = $this->uploadImage($request, $title);
+        }
     
         $category->save();
     
@@ -93,24 +95,26 @@ class CategoryController extends Controller
     }
 
 
+
     public function destroy(string $id) : JsonResponse
     {
-        // check if user is admin (create policy later)
-        $user = auth()->user();
-        if($user->role->title != 'admin') return response()->json(['message' => 'admins only'], 403);
-        Category::withTrashed()->findOrFail($id)->delete();
-        return response()->json(['message' => 'category deleted successfully'], 204);
-        // return response()->json(null, Response::HTTP_NO_CONTENT);
+        $this->authorize('delete', Category::class);
+        $category = Category::withTrashed()->findOrFail($id);
+        $category->products()->detach(); // remove relationship
+        $category->delete();
+        return response()->json(null, 204);
     }
+
+
 
     private function uploadImage(Request $request, string $title) : ImageModel
     { 
-        $imgData = (new Image)->make($request->file('image'))->fit(height:720, width:1280)->encode('jpg');
+        $imgData = Image::make($request->file('image'))->fit(1280, 720)->encode('jpg');
         $fileName = $title . '-' . uniqid() . '.jpg';
-        Storage::put('public/category/'.$fileName , $imgData);
+        Storage::put('public/category/' . $fileName , $imgData);
 
         return ImageModel::create([
-            'path' => $fileName,
+            'path' => 'storage/category/' . $fileName,
             'type' => 'category'
         ]);
     }

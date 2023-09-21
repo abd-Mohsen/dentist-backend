@@ -18,9 +18,9 @@ class Image extends Model
         'type',
     ];
 
-    protected function path(): Attribute {
-        return Attribute::make(get: function($val){
-            return $val ? 'storage/profile/' . $val : null;
-        });
-    }
+    // protected function path(): Attribute {
+    //     return Attribute::make(get: function($val){
+    //         return $val ? 'storage/profile/' . $val : null;
+    //     });
+    // }
 }

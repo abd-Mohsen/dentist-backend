@@ -18,6 +18,22 @@ class Category extends Model
         'image_id',
     ];
 
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function ($category) {
+            if ($category->children()->exists()) {
+                throw new \Exception("Cannot delete category with child categories.");
+            }
+        });
+    }
+
+    public function children()
+    {
+        return $this->hasMany(Category::class, 'parent_id');
+    }
+
     public function image()
     {
         return $this->belongsTo(Image::class);
