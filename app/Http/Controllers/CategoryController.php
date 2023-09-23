@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use Illuminate\Http\File;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use App\Models\Image as ImageModel;
@@ -15,16 +16,15 @@ class CategoryController extends Controller
 
     public function index() : JsonResponse //only parents
     {
-        $categories = Category::where('parent_id', null)->get();
+        $categories =Category::where('parent_id', null)->withCount('children')->get();
         return response()->json(CategoryResource::collection($categories));
     }
 
 
 
-    public function childCategories() : JsonResponse
+    public function childCategories() : JsonResponse 
     {
         $categories = Category::whereNotNull('parent_id')->get();
-        //if ($categories->isEmpty()) return response()->json([]);
         return response()->json(CategoryResource::collection($categories));
     }
 
@@ -40,18 +40,19 @@ class CategoryController extends Controller
             'parent' => 'nullable|string|min:4',
         ]);
                 
-        //check if parent exists
+        //to check if parent exists and eligible
         $parent = null;
         if($data['parent']){
             $parent = Category::where('title', $data['parent'])->first(); 
             if(!$parent) return response()->json(['message' => 'parent category does not exist'], 400);
+            if($parent->parent) return response()->json(['message' => 'parent cannot be a child to another category'], 400);
         } 
 
-        //check if title is unique
+        //to check if title is unique
         if(Category::where('title', $data['title'])->first())
          return response()->json(['message' => 'category already exists'], 400);
 
-        $image = $this->uploadImage($request, $data['title']);
+        $image = $this->uploadImage($request->file('image'), $data['title']); // try to not pass request
         
         Category::create([
             'title' => $data['title'],
@@ -60,56 +61,66 @@ class CategoryController extends Controller
         ]);
 
         return response()->json(['message' => 'Category created successfully'], 201);
+        //check if parent has a parent
     }
 
 
 
     public function show(string $id) : JsonResponse
     {
-        $category = Category::with('parent')->findOrFail($id);
+        $category = Category::with('parent')->withCount('children')->findOrFail($id);
         return response()->json(new CategoryResource($category));
     }
 
 
 
-    public function update(Request $request, string $id) : JsonResponse
+    public function categoryDetails(string $id) : JsonResponse
+    {
+        $category = Category::with('parent')->findOrFail($id);
+        return response()->json([
+            'products' => $category->products,
+            'sub_categories' => $category->children,
+        ]);
+    }
+
+
+
+    public function update(Request $request, string $id) : JsonResponse // in postman, request not working when sending image as a null file, send as null text 
     {
         $category = Category::findOrFail($id);
-    
+
         $this->authorize('update', $category);
-    
-        $title = $request->input('title');
-        $image = $request->file('image');
-    
-        if ($title) {
-            $category->title = $title;
-        }
-    
-        if ($image) {
-            $category->image_id = $this->uploadImage($request, $title);
-        }
-    
+
+        $data = $request->validate([
+            'title' => 'nullable|string|max:50|min:4',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048'
+        ]);
+
+        $image = $data['image'] ? $this->uploadImage($request->file('image'), $data['title']) : null;
+        
+        if($data['title']) $category->title = $data['title']; 
+        if($image) $category->image_id = $image->id; 
         $category->save();
     
         return response()->json(['message' => 'Category updated successfully']);
     }
 
 
-
     public function destroy(string $id) : JsonResponse
     {
         $this->authorize('delete', Category::class);
         $category = Category::withTrashed()->findOrFail($id);
-        $category->products()->detach(); // remove relationship
+        $category->products()->detach(); // to remove relationship
+        //save category if neccessary
         $category->delete();
         return response()->json(null, 204);
     }
 
 
 
-    private function uploadImage(Request $request, string $title) : ImageModel
+    private function uploadImage($imageFile, string $title) : ImageModel
     { 
-        $imgData = Image::make($request->file('image'))->fit(1280, 720)->encode('jpg');
+        $imgData = Image::make($imageFile)->fit(1280, 720)->encode('jpg');
         $fileName = $title . '-' . uniqid() . '.jpg';
         Storage::put('public/category/' . $fileName , $imgData);
 

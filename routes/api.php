@@ -22,6 +22,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/upload-profile-image', [UserController::class, 'uploadProfileImage']);
 
     Route::get('/categories/all-children', [CategoryController::class, 'childCategories']);
+    Route::get('/category-details/{category}', [CategoryController::class, 'categoryDetails']);
 
     Route::apiResources([
         'products'=> ProductController::class,

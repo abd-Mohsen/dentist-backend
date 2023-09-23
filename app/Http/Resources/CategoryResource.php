@@ -18,9 +18,9 @@ class CategoryResource extends JsonResource
             'id' => $this->id,
             'title' => $this->title,
             'image' => $this->image->path,
-            'parent' => new CategoryResource($this->parent),
-            'products' => $this->products,
-            'children' => $this->children,
+            'parent' => $this->parent?->title,
+            'children_count' => $this->children_count ?? 0, // will be null if not loaded with count ("children")
+            //filter resource or create another one
         ];
     }
 }

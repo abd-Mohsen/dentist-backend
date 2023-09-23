@@ -29,21 +29,25 @@ class Category extends Model
         });
     }
 
+
     public function children()
     {
         return $this->hasMany(Category::class, 'parent_id');
     }
 
+    
     public function image()
     {
         return $this->belongsTo(Image::class);
     }
+
 
     public function products()
     {
         return $this->belongsToMany(Product::class);
     }
 
+    
     public function parent()
     {
         return $this->belongsTo(Category::class, 'parent_id');
