@@ -19,10 +19,11 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/verify-register-otp', [OTPController::class,'verifyRegisterOTP'])->middleware(['signed','throttle:3,1'])->name('verification.otp');
     Route::get('/logout', [AuthController::class, 'logout']);
     Route::get('/profile', [UserController::class, 'profile']);
-    Route::post('/upload-profile-image', [UserController::class, 'uploadProfileImage']);
-
+    
     Route::get('/categories/all-children', [CategoryController::class, 'childCategories']);
     Route::get('/category-details/{category}', [CategoryController::class, 'categoryDetails']);
+
+    Route::get('/brand-products/{brand}', [BrandController::class, 'getProducts']);
 
     Route::apiResources([
         'products'=> ProductController::class,
@@ -39,5 +40,6 @@ Route::post('/reset-password',[OTPController::class,'resetPassword']);
 Route::middleware(['auth:sanctum','verified'])->group(function () { //make sure u need verified acc for this
     Route::post('/edit-profile', [UserController::class, 'editProfile']);
     Route::post('/edit-password', [UserController::class, 'editPassword']);
+    Route::post('/upload-profile-image', [UserController::class, 'uploadProfileImage']);
 });
 

@@ -21,6 +21,7 @@ class Product extends Model
         'width',
         'height',
         'upc',
+        'sku',
         'quantity',
         'sell_quantity',
         'max_purchase_qty',

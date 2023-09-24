@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
-use Illuminate\Http\File;
+//use Illuminate\Http\File;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use App\Models\Image as ImageModel;
@@ -14,15 +14,16 @@ use App\Http\Resources\CategoryResource;
 class CategoryController extends Controller
 {
 
-    public function index() : JsonResponse //only parents
+    public function index() : JsonResponse //only parents btw
     {
+        //add pagination
         $categories =Category::where('parent_id', null)->withCount('children')->get();
         return response()->json(CategoryResource::collection($categories));
     }
 
 
 
-    public function childCategories() : JsonResponse 
+    public function childCategories() : JsonResponse //pagination
     {
         $categories = Category::whereNotNull('parent_id')->get();
         return response()->json(CategoryResource::collection($categories));
@@ -74,7 +75,7 @@ class CategoryController extends Controller
 
 
 
-    public function categoryDetails(string $id) : JsonResponse
+    public function categoryDetails(string $id) : JsonResponse //paginate on products (try on categories)
     {
         $category = Category::with('parent')->findOrFail($id);
         return response()->json([
@@ -106,7 +107,7 @@ class CategoryController extends Controller
     }
 
 
-    public function destroy(string $id) : JsonResponse
+    public function destroy(string $id) : JsonResponse //check category_product relation
     {
         $this->authorize('delete', Category::class);
         $category = Category::withTrashed()->findOrFail($id);
