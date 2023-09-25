@@ -30,9 +30,10 @@ class ProductResource extends JsonResource
             'active' => $this->active,
             'upc' => $this->upc,
             'sku' => $this->sku,
-            'images' => $this->images,
-            'categories' => $this->categories,
-            'brand' => $this->brand,
+            'images' => ImageResource::collection($this->images),
+            'categories' => CategoryResource::collection($this->categories),
+            'brand' => new BrandResource($this->brand),
+            'owner' => $this->owner_id,
         ];
     }
 }

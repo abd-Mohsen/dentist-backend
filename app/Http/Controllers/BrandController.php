@@ -95,7 +95,7 @@ class BrandController extends Controller
 
     private function uploadImage($imageFile, string $title) : ImageModel
     { 
-        $imgData = Image::make($imageFile)->fit(960, 540)->encode('jpg');
+        $imgData = Image::make($imageFile)->fit(720, 1280)->encode('jpg');
         $fileName = $title . '-' . uniqid() . '.jpg';
         Storage::put('public/brand/' . $fileName , $imgData);
 

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Brand;
 use App\Models\Product;
+use App\Models\Category;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\Image as ImageModel;
@@ -13,7 +14,7 @@ use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
-    public function index()
+    public function index()//pagination
     {
         $products = Product::all();
         return response()->json(ProductResource::collection($products));
@@ -41,17 +42,28 @@ class ProductController extends Controller
             'sell_quantity' => 'required|numeric|min:0',
             'max_purchase_qty' => 'required|numeric|min:0',
             'min_purchase_qty' => 'required|numeric|min:0',
-            'active' => 'required|boolean',
+            'active' => 'required|bool',
             'categories' => 'required|array',
             'categories.*' => 'required|numeric|min:1',
             'images' => 'required|array',
             'images.*' => 'required|image|mimes:jpeg,png,jpg|max:2048',
         ]);
 
-        $brand = Brand::where('title', $data['brand']);
+        $brand = Brand::where('title', $data['brand'])->first();
         if(!$brand) return response()->json(['message' => 'Brand does not exist'], 400);
-                
-        $images = $this->uploadImages($request->file('image'), $data['title']); 
+
+        $imagesIds = $this->uploadImages($request->file('images'), $data['name']);
+        if(!count($imagesIds)) return response()->json(['message' => 'choose some images first'], 400);
+
+        $categoriesIds = $data['categories'];
+        if(!count($categoriesIds)) return response()->json(['message' => 'choose some categories first'], 400);
+        
+        foreach ($categoriesIds as $categoryId) {
+            $category = Category::find($categoryId);
+            if(!$category) return response()->json(['message' => 'Category does not exist'], 400);
+            if (!$category->parent_id) 
+                return response()->json(['message' => 'Category ' . $category->title . ' is a parent.. so cannot be used'], 400);
+        }
         
         $product = Product::create([
             'name' => $data['name'], 
@@ -62,6 +74,7 @@ class ProductController extends Controller
             'width' => $data['width'],
             'height' => $data['height'],
             'upc' => $data['upc'],
+            'sku' => '0',
             'quantity' => $data['quantity'],
             'sell_quantity' => $data['sell_quantity'],
             'max_purchase_qty' => $data['max_purchase_qty'],
@@ -73,10 +86,13 @@ class ProductController extends Controller
 
         $product->sku = 'PRD-' . $product->id . $user->id . '-' . Str::random(6); 
         $product->categories()->attach($data['categories']); //fill category_product table
-        $product->images()->attach($images); //fill image_product table
+        $product->images()->attach($imagesIds); //fill image_product table
         $product->save();
 
-        return response()->json(['message' => 'Product created successfully'], 201);
+        return response()->json([
+            'message' => 'Product created successfully',
+            'product' => new ProductResource($product)
+        ], 201);
     }
 
 
@@ -91,21 +107,75 @@ class ProductController extends Controller
 
     public function update(Request $request, string $id)
     {
-        //
+        $product = Product::findOrFail($id);
+        $this->authorize('update', $product);
+
+        $data = $request->validate([
+            'name' => 'nullable|string|max:50|min:4',
+            'description' => 'nullable|string|max:400|min:8',
+            'upc' => 'nullable|string',
+            'brand' => 'nullable|string',
+            'price' => 'nullable|numeric|min:0',
+            'weight' => 'nullable|numeric|min:0',
+            'length' => 'nullable|numeric|min:0',
+            'width' => 'nullable|numeric|min:0',
+            'height' => 'nullable|numeric|min:0',
+            'quantity' => 'nullable|numeric|min:0',
+            'sell_quantity' => 'nullable|numeric|min:0',
+            'max_purchase_qty' => 'nullable|numeric|min:0',
+            'min_purchase_qty' => 'nullable|numeric|min:0',
+            'active' => 'nullable|bool',
+            'categories' => 'nullable|array',
+            'categories.*' => 'nullable|numeric|min:1',
+            'images' => 'nullable|array',
+            'images.*' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+        ]);
+
+        if($data['brand']){
+            $brand = Brand::where('title', $data['brand'])->first();
+            if(!$brand) return response()->json(['message' => 'Brand does not exist'], 400);
+        }
+        
+        $data = array_filter($data, fn($value) => $value != null);
+    
+        $imagesIds = $this->uploadImages($request->file('images'), $data['name']);
+        $categoriesIds = $data['categories'];
+
+        if($categoriesIds){
+            foreach ($categoriesIds as $categoryId) {
+                $category = Category::find($categoryId);
+                if(!$category) return response()->json(['message' => 'Category does not exist'], 400);
+                if (!$category->parent_id) 
+                    return response()->json(['message' => 'Category ' . $category->title . ' is a parent.. so cannot be used'], 400);
+            }
+            if(count($categoriesIds)) $product->categories()->sync($categoriesIds);
+        }
+
+        if(count($imagesIds)) $product->images()->sync($imagesIds);
+        
+        $product->fill($data);
+
+        $product->save();
+
+        return response()->json([
+            'message' => 'Product updated successfully',
+            'product' => new ProductResource($product)
+        ]);
     }
 
 
 
-    public function destroy(string $id)
+    public function destroy(string $id)//remove 'with trashed' if necessary
     {
-        $this->authorize('delete', Product::class);
-        Product::withTrashed()->findOrFail($id)->delete();
+        $product =  Product::withTrashed()->findOrFail($id);
+        $this->authorize('delete', $product);
+        $product->delete();
         return response()->json(null, 204);
         // when making orders. make sure that deleting product doesnt delete orders
     }
 
 
-
+    // todo: for all images , delete the old ones when updating 
     private function uploadImages(array $imageFiles, string $title): array
     {
         $uploadedImages = [];
@@ -115,10 +185,12 @@ class ProductController extends Controller
             $fileName = $title . '-' . uniqid() . '.jpg';
             Storage::put('public/product/' . $fileName, $imgData);
 
-            $uploadedImages[] = ImageModel::create([
+            $createdImage = ImageModel::create([
                 'path' => 'storage/product/' . $fileName,
                 'type' => 'product'
-            ])->id;
+            ]);
+
+            $uploadedImages[] = $createdImage->id;
         }
 
         return $uploadedImages;
