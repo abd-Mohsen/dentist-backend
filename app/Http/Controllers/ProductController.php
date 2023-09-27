@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use App\Models\Image as ImageModel;
 use Intervention\Image\Facades\Image;
 use App\Http\Resources\ProductResource;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
@@ -172,6 +173,14 @@ class ProductController extends Controller
         $product->delete();
         return response()->json(null, 204);
         // when making orders. make sure that deleting product doesnt delete orders
+    }
+
+
+
+    public function search($query) : JsonResponse //to save bandwidth and memory, create a simpler resource 
+    { 
+        $products =  ProductResource::collection(Product::search($query)->get());
+        return response()->json($products);
     }
 
 

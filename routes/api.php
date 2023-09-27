@@ -22,14 +22,25 @@ Route::middleware('auth:sanctum')->group(function () {
     
     Route::get('/categories/all-children', [CategoryController::class, 'childCategories']);
     Route::get('/category-details/{category}', [CategoryController::class, 'categoryDetails']);
+    Route::get('categories/search/{query}', [CategoryController::class, 'search']);
 
     Route::get('/brand-products/{brand}', [BrandController::class, 'getProducts']);
+    Route::get('brands/search/{query}', [BrandController::class, 'search']);
+
+    Route::get('products/search/{query}', [ProductController::class, 'search']);
+    
 
     Route::apiResources([
         'products'=> ProductController::class,
         'categories'=> CategoryController::class,
         'brands'=> BrandController::class,
     ]);
+
+    Route::middleware('verified')->group(function () { //make sure u need verified acc for this
+        Route::post('/edit-profile', [UserController::class, 'editProfile']);
+        Route::post('/edit-password', [UserController::class, 'editPassword']);
+        Route::post('/upload-profile-image', [UserController::class, 'uploadProfileImage']);
+    });
     
 });
 
@@ -37,9 +48,4 @@ Route::post('/send-reset-otp',[OTPController::class,'sendResetOTP'])->middleware
 Route::post('/verify-reset-otp',[OTPController::class,'verifyResetOTP'])->middleware('throttle:3,1');
 Route::post('/reset-password',[OTPController::class,'resetPassword']);
 
-Route::middleware(['auth:sanctum','verified'])->group(function () { //make sure u need verified acc for this
-    Route::post('/edit-profile', [UserController::class, 'editProfile']);
-    Route::post('/edit-password', [UserController::class, 'editPassword']);
-    Route::post('/upload-profile-image', [UserController::class, 'uploadProfileImage']);
-});
 

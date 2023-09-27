@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
+use Laravel\Scout\Searchable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Category extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, Searchable;
 
     protected $dates = ['deleted_at'];
 
@@ -27,6 +28,16 @@ class Category extends Model
                 throw new \Exception("Cannot delete category with child categories.");
             }
         });
+    }
+
+
+    public function toSearchableArray()
+    {
+        return [
+            'title' => $this->title,
+            //'parent' => $this->parent?->title,
+            //barcode
+        ];
     }
 
 

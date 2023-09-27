@@ -93,6 +93,14 @@ class BrandController extends Controller
 
 
 
+    public function search($query) : JsonResponse //to save bandwidth and memory, create a simpler resource 
+    { 
+        $brands =  BrandResource::collection(Brand::search($query)->get());
+        return response()->json($brands);
+    }
+
+
+
     private function uploadImage($imageFile, string $title) : ImageModel
     { 
         $imgData = Image::make($imageFile)->fit(720, 1280)->encode('jpg');

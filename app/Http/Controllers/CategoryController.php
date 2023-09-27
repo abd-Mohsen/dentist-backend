@@ -119,6 +119,14 @@ class CategoryController extends Controller
 
 
 
+    public function search($query) : JsonResponse //to save bandwidth and memory, create a simpler resource 
+    { 
+        $categories =  CategoryResource::collection(Category::search($query)->get());
+        return response()->json($categories);
+    }
+
+
+
     private function uploadImage($imageFile, string $title) : ImageModel
     { 
         $imgData = Image::make($imageFile)->fit(1280, 720)->encode('jpg');

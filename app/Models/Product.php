@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
+use Laravel\Scout\Searchable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Product extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, Searchable;
 
     protected $dates = ['deleted_at'];
 
@@ -32,6 +33,15 @@ class Product extends Model
         //list of categories (fill in pivot table)
         //list of images (fill in pivot table)
     ];
+
+    public function toSearchableArray()
+    {
+        return [
+            'name' => $this->name,
+            //'owner' => $this->owner?->name,
+            //barcode
+        ];
+    }
 
     public function categories()
     {
