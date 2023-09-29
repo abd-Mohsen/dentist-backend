@@ -14,12 +14,13 @@ return new class extends Migration
     {
         Schema::create('categories', function (Blueprint $table) {
             $table->id();
-            $table->string('title')->unique();
+            $table->string('title');
             $table->foreignIdFor(Image::class)->nullable();
             $table->unsignedBigInteger('parent_id')->nullable();
             $table->softDeletes();
             $table->timestamps();
 
+            $table->foreign('image_id')->references('id')->on('images')->onDelete('set null');
             $table->foreign('parent_id')->references('id')->on('categories')->onDelete('cascade');
         });
     }

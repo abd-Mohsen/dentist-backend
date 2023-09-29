@@ -34,11 +34,11 @@ class ProductController extends Controller
             'description' => 'required|string|max:400|min:8',
             'upc' => 'required|string',
             'brand' => 'required|string',
-            'price' => 'required|numeric|min:0',
-            'weight' => 'required|numeric|min:0',
-            'length' => 'required|numeric|min:0',
-            'width' => 'required|numeric|min:0',
-            'height' => 'required|numeric|min:0',
+            'price' => 'required|numeric|min:0|max:999999',
+            'weight' => 'required|numeric|min:0|max:9999',
+            'length' => 'required|numeric|min:0|max:9999',
+            'width' => 'required|numeric|min:0|max:9999',
+            'height' => 'required|numeric|min:0|max:9999',
             'quantity' => 'required|numeric|min:0',
             'sell_quantity' => 'required|numeric|min:0',
             'max_purchase_qty' => 'required|numeric|min:0',
@@ -49,6 +49,11 @@ class ProductController extends Controller
             'images' => 'required|array',
             'images.*' => 'required|image|mimes:jpeg,png,jpg|max:2048',
         ]);
+
+        if($data['min_purchase_qty'] > $data['max_purchase_qty'] ||
+           $data['max_purchase_qty'] > $data['sell_quantity'] ||
+           $data['sell_quantity'] > $data['quantity'] )
+            return response()->json(['message' => 'quantities are not valid, please recheck them'], 400);
 
         $brand = Brand::where('title', $data['brand'])->first();
         if(!$brand) return response()->json(['message' => 'Brand does not exist'], 400);
@@ -75,7 +80,7 @@ class ProductController extends Controller
             'width' => $data['width'],
             'height' => $data['height'],
             'upc' => $data['upc'],
-            'sku' => '0',
+            'sku' => Str::random(6),
             'quantity' => $data['quantity'],
             'sell_quantity' => $data['sell_quantity'],
             'max_purchase_qty' => $data['max_purchase_qty'],
@@ -116,11 +121,11 @@ class ProductController extends Controller
             'description' => 'nullable|string|max:400|min:8',
             'upc' => 'nullable|string',
             'brand' => 'nullable|string',
-            'price' => 'nullable|numeric|min:0',
-            'weight' => 'nullable|numeric|min:0',
-            'length' => 'nullable|numeric|min:0',
-            'width' => 'nullable|numeric|min:0',
-            'height' => 'nullable|numeric|min:0',
+            'price' => 'required|numeric|min:0|max:999999',
+            'weight' => 'required|numeric|min:0|max:9999',
+            'length' => 'required|numeric|min:0|max:9999',
+            'width' => 'required|numeric|min:0|max:9999',
+            'height' => 'required|numeric|min:0|max:9999',
             'quantity' => 'nullable|numeric|min:0',
             'sell_quantity' => 'nullable|numeric|min:0',
             'max_purchase_qty' => 'nullable|numeric|min:0',
@@ -131,6 +136,11 @@ class ProductController extends Controller
             'images' => 'nullable|array',
             'images.*' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
         ]);
+
+        if($data['min_purchase_qty'] > $data['max_purchase_qty'] ||
+           $data['max_purchase_qty'] > $data['sell_quantity'] ||
+           $data['sell_quantity'] > $data['quantity'] )
+            return response()->json(['message' => 'quantities are not valid, please recheck them'], 400);
 
         if($data['brand']){
             $brand = Brand::where('title', $data['brand'])->first();

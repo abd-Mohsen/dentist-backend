@@ -16,6 +16,8 @@ class CreateBrandsTable extends Migration
             $table->foreignIdFor(Image::class)->nullable();
             $table->softDeletes();
             $table->timestamps();
+
+            $table->foreign('image_id')->references('id')->on('images')->onDelete('set null');
         });
     }
 

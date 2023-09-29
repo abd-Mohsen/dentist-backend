@@ -17,7 +17,7 @@ class CreateProductsTable extends Migration
             $table->string('name');
             $table->text('description');
             $table->unsignedDecimal('price', 8, 2);
-            $table->unsignedDecimal('weight', 4, 2);//kg
+            $table->unsignedDecimal('weight', 6, 2);//kg
             $table->unsignedDecimal('length', 6, 2);//m
             $table->unsignedDecimal('width', 6, 2);//m
             $table->unsignedDecimal('height', 6, 2);//m
@@ -35,6 +35,7 @@ class CreateProductsTable extends Migration
             // do comment and rating (opinion) table
 
             $table->foreign('owner_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('brand_id')->references('id')->on('brands')->onDelete('cascade');
         });
     }
 

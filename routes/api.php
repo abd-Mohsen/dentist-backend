@@ -6,6 +6,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\OTPController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\WishlistController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -34,6 +35,7 @@ Route::middleware('auth:sanctum')->group(function () {
         'products'=> ProductController::class,
         'categories'=> CategoryController::class,
         'brands'=> BrandController::class,
+        'wishlists'=> WishlistController::class,
     ]);
 
     Route::middleware('verified')->group(function () { //make sure u need verified acc for this
