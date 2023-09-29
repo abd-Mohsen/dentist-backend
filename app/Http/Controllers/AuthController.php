@@ -112,13 +112,13 @@ class AuthController extends Controller
             'user' => $user->id,
             'role' => $user->role->title,
             'access_token' => $token,
-        ],201);
+        ]);
     }
 
     public function logout(Request $request) : JsonResponse
     {
         //delete current and all previous sessions 
         $request->user()->tokens()->delete();
-        return response()->json(true, 201);
+        return response()->json(true);
     }
 }

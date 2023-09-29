@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Role;
+use App\Models\Image as ImageModel;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -20,7 +21,7 @@ return new class extends Migration
             $table->string('phone');
             $table->timestamp('email_verified_at')->nullable();
             $table->foreignIdFor(Role::class);
-            $table->foreignIdFor(Image::class)->nullable();
+            $table->foreignIdFor(ImageModel::class)->nullable();
             $table->timestamps();
 
             $table->foreign('role_id')->references('id')->on('roles')->onDelete('cascade');

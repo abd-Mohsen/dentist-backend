@@ -16,6 +16,7 @@ class ProductResource extends JsonResource
     {
         return [
             'id' => $this->id,
+            'owner_id' => $this->owner_id,
             'title' => $this->name,
             'description' => $this->description,
             'price' => (float) $this->price,
@@ -23,17 +24,16 @@ class ProductResource extends JsonResource
             'length' => (double) $this->length,
             'width' => (float) $this->width,
             'height' => (float) $this->height,
-            'quantity' => $this->quantity,
-            'sell_quantity' => $this->sell_quantity,
-            'max_purchase_qty' => $this->max_purchase_qty,
-            'min_purchase_qty' => $this->min_purchase_qty,
+            'quantity' => (int) $this->quantity,
+            'sell_quantity' => (int) $this->sell_quantity,
+            'max_purchase_qty' => (int) $this->max_purchase_qty,
+            'min_purchase_qty' => (int) $this->min_purchase_qty,
             'active' => (bool) $this->active,
             'upc' => $this->upc,
             'sku' => $this->sku,
             'images' => ImageResource::collection($this->images),
             'categories' => CategoryResource::collection($this->categories),
             'brand' => new BrandResource($this->brand),
-            'owner_id' => $this->owner_id,
         ];
     }
 }

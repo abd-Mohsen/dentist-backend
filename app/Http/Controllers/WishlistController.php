@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\ProductResource;
 use App\Http\Resources\WishlistResource;
+use App\Models\Product;
 use App\Models\Wishlist;
 use Illuminate\Http\Request;
 
@@ -13,8 +15,8 @@ class WishlistController extends Controller
     {
         $this->authorize('viewAny', Wishlist::class);
         $userId = $request->user()->id;
-        $products = Wishlist::where('user_id', $userId)->get();
-        return response()->json(WishlistResource::collection($products));
+        $wishlists = Wishlist::where('user_id', $userId)->get();
+        return response()->json(WishlistResource::collection($wishlists));
     }
 
 
@@ -28,7 +30,8 @@ class WishlistController extends Controller
         $userId = $request->user()->id;
         $productId = $data['product_id'];
 
-        //check if product exists
+        if(!Product::find($productId))
+         return response()->json(['message' => 'product does not exist, how did you even do that?!'], 400); 
 
         $wishlist = Wishlist::where('user_id', $userId)
                             ->where('product_id', $productId)
@@ -52,7 +55,7 @@ class WishlistController extends Controller
                             ->where('product_id', $id)
                             ->firstOrFail();
                             
-        $this->authorize('delete', $wishlist);
+        //$this->authorize('delete', $wishlist);
         $wishlist->delete();
         return response()->json(null, 204);
     }
