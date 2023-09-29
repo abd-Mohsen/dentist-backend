@@ -35,7 +35,7 @@ class UserController extends Controller
         Storage::put('public/profile/'.$fileName , $imgData);
 
         $image = ModelsImage::create([
-            'path' => $fileName,
+            'path' => 'storage/profile/' . $fileName,
             'type' => 'profile'
         ]);
 
