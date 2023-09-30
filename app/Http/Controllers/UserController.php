@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\UserResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use App\Models\Image as ModelsImage;
@@ -14,14 +15,7 @@ class UserController extends Controller
     public function profile(Request $request) : JsonResponse
     {
         $user = $request->user();
-        return new JsonResponse([
-            'name' => $user->name,
-            'email' => $user->email,
-            'phone' => $user->phone,
-            'image' => $user->image?->path,
-            'role' => $user->role->title,
-            'is_verified' => $user->hasVerifiedEmail(),
-        ]);
+        return response()->json(new UserResource($user));
     }
 
     public function uploadProfileImage(Request $request) : JsonResponse

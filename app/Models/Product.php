@@ -63,4 +63,14 @@ class Product extends Model
         return $this->belongsToMany(Image::class);
     }
 
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
+
+    public function rating()
+    {
+        return $this->reviews()->avg('rate');
+    }
+    
 }

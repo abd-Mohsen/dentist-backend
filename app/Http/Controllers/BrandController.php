@@ -84,7 +84,7 @@ class BrandController extends Controller
 
  
 
-    public function destroy(string $id) : JsonResponse //check what happens to its products
+    public function destroy(string $id) : JsonResponse //check what happens to its products (set null if necessary)
     {
         $this->authorize('delete', Brand::class);
         Brand::withTrashed()->findOrFail($id)->delete();

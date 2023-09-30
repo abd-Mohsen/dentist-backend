@@ -31,7 +31,7 @@ class ProductController extends Controller
 
         $data = $request->validate([
             'name' => 'required|string|max:50|min:4',
-            'description' => 'required|string|max:400|min:8',
+            'description' => 'required|string|min:8|max:1000',
             'upc' => 'required|string',
             'brand' => 'required|string',
             'price' => 'required|numeric|min:0|max:999999',
@@ -118,14 +118,14 @@ class ProductController extends Controller
 
         $data = $request->validate([
             'name' => 'nullable|string|max:50|min:4',
-            'description' => 'nullable|string|max:400|min:8',
+            'description' => 'nullable|string|min:8|max:1000',
             'upc' => 'nullable|string',
             'brand' => 'nullable|string',
-            'price' => 'required|numeric|min:0|max:999999',
-            'weight' => 'required|numeric|min:0|max:9999',
-            'length' => 'required|numeric|min:0|max:9999',
-            'width' => 'required|numeric|min:0|max:9999',
-            'height' => 'required|numeric|min:0|max:9999',
+            'price' => 'nullable|numeric|min:0|max:999999',
+            'weight' => 'nullable|numeric|min:0|max:9999',
+            'length' => 'nullable|numeric|min:0|max:9999',
+            'width' => 'nullable|numeric|min:0|max:9999',
+            'height' => 'nullable|numeric|min:0|max:9999',
             'quantity' => 'nullable|numeric|min:0',
             'sell_quantity' => 'nullable|numeric|min:0',
             'max_purchase_qty' => 'nullable|numeric|min:0',

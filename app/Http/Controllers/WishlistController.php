@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\ProductResource;
 use App\Http\Resources\WishlistResource;
 use App\Models\Product;
 use App\Models\Wishlist;
@@ -55,7 +54,7 @@ class WishlistController extends Controller
                             ->where('product_id', $id)
                             ->firstOrFail();
                             
-        //$this->authorize('delete', $wishlist);
+        $this->authorize('delete', $wishlist);
         $wishlist->delete();
         return response()->json(null, 204);
     }
