@@ -2,7 +2,6 @@
 
 namespace App\Http\Resources;
 
-use App\Models\Review;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -32,7 +31,10 @@ class ProductResource extends JsonResource
             'active' => (bool) $this->active,
             'upc' => $this->upc,
             'sku' => $this->sku,
-            'rating' => (float) $this->reviews()->avg('rate'),
+            'rating' => [
+                'value' => (float) $this->reviews()->avg('rate'),
+                'count' => (float) $this->reviews()->count('rate'),
+            ],
             'my_review' => new ReviewResource($this->reviews()->where('user_id', $request->user()->id)->first()),
             'reviews' => ReviewResource::collection($this->reviews),
             'images' => ImageResource::collection($this->images),
