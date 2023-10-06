@@ -14,13 +14,11 @@ return new class extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('customer_id'); 
-            //$table->unsignedBigInteger('supplier_id'); 
-            //$table->string('status')->enum(['pending', 'processing', 'completed', 'cancelled']);
-            $table->softDeletes(); //implement in model
+            
+            $table->softDeletes(); 
             $table->timestamps();
 
             $table->foreign('customer_id')->references('id')->on('users')->onDelete('cascade');
-            //$table->foreign('supplier_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

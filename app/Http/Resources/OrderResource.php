@@ -14,6 +14,10 @@ class OrderResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        return [
+            'id' => $this->id,
+            'sub_orders' => SubOrderResource::collection($this->subOrders),
+            'date' => $this->created_at,
+        ];
     }
 }

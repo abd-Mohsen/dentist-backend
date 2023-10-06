@@ -14,14 +14,16 @@ return new class extends Migration
     {
         Schema::create('sub_orders', function (Blueprint $table) {
             $table->id();
-            
+
             $table->foreignIdFor(Order::class);
+            $table->unsignedBigInteger('supplier_id'); 
             $table->string('status')->enum(['pending', 'processing', 'completed', 'cancelled']);
 
             $table->softDeletes();
             $table->timestamps();
 
             $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
+            $table->foreign('supplier_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
