@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\OTPController;
 use App\Http\Controllers\ProductController;
@@ -46,6 +47,7 @@ Route::middleware('auth:sanctum')->group(function () {
         'brands'=> BrandController::class,
         'wishlists'=> WishlistController::class,
         'reviews'=> ReviewController::class,
+        'orders'=> OrderController::class,
     ]);
 });
 

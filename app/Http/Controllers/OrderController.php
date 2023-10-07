@@ -31,7 +31,7 @@ class OrderController extends Controller
         $data = $request->validate([
             '*.product_id' => 'required|integer',
             '*.quantity' => 'required|integer',
-            '*.price' => 'required|double',
+            '*.price' => 'required|numeric',
         ]);
 
         $order = null;
@@ -48,7 +48,7 @@ class OrderController extends Controller
                     $product = Product::findOrFail($item['product_id']);
                     return $product->supplier_id;
                 });
-        
+        return response()->json($products_by_supplier,400);
             // Create a suborder for each group of products from the same supplier
             foreach ($products_by_supplier as $supplier_id => $products) {
                 $suborder = Suborder::create([
@@ -59,7 +59,7 @@ class OrderController extends Controller
         
                 // Add the products to the suborder
                 foreach ($products as $product) {
-                    $suborder->products()->attach($product['id'], [
+                    $suborder->products()->attach($product['product_id'], [
                         'quantity' => $product['quantity'],
                         'price' => $product['price'],
                     ]);
