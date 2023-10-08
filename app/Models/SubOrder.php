@@ -28,7 +28,13 @@ class SubOrder extends Model
     public function products()
     {
         return $this->belongsToMany(Product::class)
-                    ->withPivot('quantity', 'price');
+                    ->withPivot('quantity', 'price')
+                    ->withTimestamps();
+    }
+
+    public function supplier()
+    {
+        return $this->belongsTo(User::class, 'supplier_id');
     }
 
 }
