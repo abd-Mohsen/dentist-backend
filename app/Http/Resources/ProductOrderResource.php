@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -15,7 +16,8 @@ class ProductOrderResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'product' => new ProductResource($this->product), //make a simplified product resource
+            //these properties are for the original product, not the cart product
+            'product' => new ProductResource(Product::find($this->product_id)), //make a simplified product resource
             'quantity' => $this->quantity,
             'price' => $this->price,
         ];
