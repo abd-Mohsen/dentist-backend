@@ -2,14 +2,23 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\SubOrderResource;
+use App\Models\SubOrder;
 use Illuminate\Http\Request;
 
 class SubOrderController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        //all suborders for a supplier
-        // make 2 requests, one for all suborders, second for the pending suborders
+        //$this->authorize('viewaAny', SubOrder::class);
+        $userId = $request->user()->id;
+        $subOrders = SubOrder::where($userId,'supplier_id');
+
+        // all suborders for a supplier
+        // make 3 requests,
+        // one for all suborders,
+        // second for the pending suborders,
+        // another grouped by customer
     }
 
 
@@ -23,7 +32,8 @@ class SubOrderController extends Controller
 
     public function show(string $id)
     {
-        //
+        $subOrder = SubOrder::findOrFail($id);
+        return new SubOrderResource($subOrder);
     }
 
 
@@ -31,6 +41,7 @@ class SubOrderController extends Controller
     public function update(Request $request, string $id)
     {
         //update in product_order table
+        //or update the whole order?
     }
 
 

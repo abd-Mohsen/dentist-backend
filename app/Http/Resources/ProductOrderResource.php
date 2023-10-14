@@ -17,9 +17,9 @@ class ProductOrderResource extends JsonResource
     {
         return [
             //these properties are for the original product, not the cart product
-            'product' => new ProductResource(Product::find($this->product_id)), //make a simplified product resource
-            'quantity' => $this->quantity,
-            'price' => $this->price,
+            'product' => new SimpleProductResource(Product::find($this->pivot->product_id)), //make a simplified product resource
+            'quantity' => $this->pivot->quantity,
+            'price' => $this->pivot->price,
         ];
     }
 }

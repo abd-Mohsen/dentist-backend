@@ -17,7 +17,7 @@ class SubOrderResource extends JsonResource
         return [
             'supplier' => new UserResource($this->supplier),
             'status' => $this->status, 
-            'products' => ProductOrderResource::collection($this->products),
+            'ordered_products' => ProductOrderResource::collection($this->products),
         ];
     }
 }
