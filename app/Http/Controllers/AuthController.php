@@ -122,3 +122,5 @@ class AuthController extends Controller
         return response()->json(true);
     }
 }
+
+//expires_at column is null for every issued token, maybe cuz i set a default value in config?

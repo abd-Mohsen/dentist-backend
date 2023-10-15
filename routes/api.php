@@ -8,6 +8,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\OTPController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\SubOrderController;
 use App\Http\Controllers\WishlistController;
 use Illuminate\Support\Facades\Route;
 
@@ -39,6 +40,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('brands/search/{query}', [BrandController::class, 'search']);
 
     Route::get('products/search/{query}', [ProductController::class, 'search']);
+
+    Route::get('sub-orders/', [SubOrderController::class, 'index']);
+    Route::get('sub-orders/pending', [SubOrderController::class, 'pendingSubOrders']);
+    Route::get('sub-orders/grouped-by-customer', [SubOrderController::class, 'subOrdersGrouped']);
     
 
     Route::apiResources([

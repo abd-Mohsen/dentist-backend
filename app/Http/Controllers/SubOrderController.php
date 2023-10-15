@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\SubOrderResource;
+use App\Http\Resources\SubOrderResource2;
 use App\Models\SubOrder;
 use Illuminate\Http\Request;
 
@@ -12,13 +13,49 @@ class SubOrderController extends Controller
     {
         //$this->authorize('viewaAny', SubOrder::class);
         $userId = $request->user()->id;
-        $subOrders = SubOrder::where($userId,'supplier_id');
+        $subOrders = SubOrder::where('supplier_id', $userId)
+                             ->with('order.customer')
+                             ->orderBy('created_at', 'desc')
+                             ->get();
 
+        return response()->json(SubOrderResource2::collection($subOrders));
         // all suborders for a supplier
         // make 3 requests,
         // one for all suborders,
         // second for the pending suborders,
         // another grouped by customer
+    }
+
+
+
+    public function pendingSubOrders(Request $request)
+    {
+        //$this->authorize('viewaAny', SubOrder::class);
+        $userId = $request->user()->id;
+        $subOrders = SubOrder::where('supplier_id', $userId)
+                             ->where('status', 'pending')
+                             ->with('order.customer')
+                             ->orderBy('created_at', 'desc')
+                             ->get();
+
+        return response()->json(SubOrderResource2::collection($subOrders));
+    }
+
+
+
+    public function subOrdersGrouped(Request $request)
+    {
+        //$this->authorize('viewaAny', SubOrder::class);
+        $userId = $request->user()->id;
+        $subOrders = SubOrder::where('supplier_id', $userId)
+                             ->where('status', 'pending')
+                             ->with('order.customer')
+                             ->orderBy('created_at', 'desc')
+                             ->get()
+                             ->groupBy(fn($subOrder) => $subOrder->order->customer);
+
+        return response()->json($subOrders);
+        return response()->json(SubOrderResource::collection($subOrders)); // return {"user":___, "suborder":[____] }
     }
 
 
@@ -41,7 +78,8 @@ class SubOrderController extends Controller
     public function update(Request $request, string $id)
     {
         //update in product_order table
-        //or update the whole order?
+        // dont let user add product, just delete or edit qty
+        // also make a QR code scan for verifying delivery
     }
 
 

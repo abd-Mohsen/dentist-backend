@@ -39,7 +39,7 @@ class SubOrder extends Model
 
     public function customer()
     {
-        return $this->belongsToThrough(User::class, Order::class, 'customer_id');
+        return $this->belongsTo(User::class, 'customer_id');
     }
 
 }

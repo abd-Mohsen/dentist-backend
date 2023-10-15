@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Order;
 use App\Models\SubOrder;
 use Illuminate\Http\Request;
@@ -43,6 +44,8 @@ class OrderController extends Controller
         
             $products_by_supplier = collect($data)
                 ->groupBy(function ($cartItem) {
+                    // if(User::findOrFail($cartItem["supplier_id"])?->role->title != 'supllier')
+                    //  return response()->json('a product doesnt belong to a supplier',401);
                     return $cartItem["supplier_id"];
                 });
         
