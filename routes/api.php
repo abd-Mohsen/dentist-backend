@@ -44,6 +44,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('sub-orders/', [SubOrderController::class, 'index']);
     Route::get('sub-orders/pending', [SubOrderController::class, 'pendingSubOrders']);
     Route::get('sub-orders/grouped-by-customer', [SubOrderController::class, 'subOrdersGrouped']);
+    Route::patch('sub-orders/{id}', [SubOrderController::class, 'update']);
     
 
     Route::apiResources([

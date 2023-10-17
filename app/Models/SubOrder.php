@@ -25,18 +25,20 @@ class SubOrder extends Model
     }
 
 
-    public function products() //problem with serialization (cart resource)
+    public function products() 
     {
         return $this->belongsToMany(Product::class)
                     ->withPivot('quantity', 'price')
                     ->withTimestamps();
     }
 
+
     public function supplier()
     {
         return $this->belongsTo(User::class, 'supplier_id');
     }
 
+    
     public function customer()
     {
         return $this->belongsTo(User::class, 'customer_id');

@@ -39,7 +39,7 @@ class SubOrderPolicy
      */
     public function update(User $user, SubOrder $subOrder): bool
     {
-        return $user->role->title === 'admin' || $subOrder->customer_id === $subOrder->id;
+        return $user->role->title === 'admin' || $subOrder->order->customer_id === $user->id;
     }
 
     /**
