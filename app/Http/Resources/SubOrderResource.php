@@ -18,6 +18,7 @@ class SubOrderResource extends JsonResource
             'supplier' => new UserResource($this->supplier),
             'status' => $this->status, 
             'ordered_products' => ProductOrderResource::collection($this->products),
+            'date' => $this->created_at,
             //'customer' => $this->order->customer, //eager load
         ];
     }
