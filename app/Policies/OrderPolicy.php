@@ -30,6 +30,12 @@ class OrderPolicy
         return $user->role->title === 'dentist';
     }
 
+    public function cancel(User $user, Order $order): bool
+    {
+        return ($user->role->title === 'admin' || $order->customer_id === $user->id) &&
+        now()->diffInDays($order->created_at) < 2;
+    }
+
 
     public function delete(User $user, Order $order): bool
     {

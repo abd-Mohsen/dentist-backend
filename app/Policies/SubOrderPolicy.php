@@ -39,12 +39,20 @@ class SubOrderPolicy
      */
     public function update(User $user, SubOrder $subOrder): bool
     {
-        return $user->role->title === 'admin' || $subOrder->order->customer_id === $user->id;
+        return ($user->role->title === 'admin' || $subOrder->order->customer_id === $user->id) &&
+        now()->diffInDays($subOrder->created_at) < 2;
     }
 
     /**
      * Determine whether the user can delete the model.
      */
+
+    public function cancel(User $user, SubOrder $subOrder): bool
+    {
+        return ($user->role->title === 'admin' || $subOrder->order->customer_id === $user->id) &&
+        now()->diffInDays($subOrder->created_at) < 2;
+    }
+
     public function delete(User $user, SubOrder $subOrder): bool
     {
         return $user->role->title === 'admin';

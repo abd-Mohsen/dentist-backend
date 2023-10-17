@@ -119,4 +119,6 @@ class OrderController extends Controller
         //cancel all sub-orders
         return response()->json("cancelled successfully");
     }
+
+    // make a request to cancel all sub orders
 }

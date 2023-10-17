@@ -115,7 +115,7 @@ class SubOrderController extends Controller
         
         return response()->json(['message' => 'Suborder updated successfully']);
 
-        // if the order is day old for example dony let user edit it (grey out the option in mobile app) (in policy)
+        // if the order is day old for example dont let user edit it (grey out the option in mobile app) (in policy)
         // also make a QR code scan for verifying delivery
     }
 
