@@ -200,7 +200,7 @@ class ProductController extends Controller
         $uploadedImages = [];
 
         foreach ($imageFiles as $imageFile) {
-            $imgData = Image::make($imageFile)->fit(1280, 720)->encode('jpg');
+            $imgData = Image::make($imageFile)->fit(800, 1280)->encode('jpg');
             $fileName = $title . '-' . uniqid() . '.jpg';
             Storage::put('public/product/' . $fileName, $imgData);
 
