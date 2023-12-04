@@ -52,7 +52,7 @@ class AuthController extends Controller
         return response()->json([
             'message' => 'User registered successfully',
             'access_token' => $user->createToken("access token")->plainTextToken,
-            ], 201);
+        ], 201);
     }
 
     public function register(Request $request) : JsonResponse
@@ -84,7 +84,7 @@ class AuthController extends Controller
         return response()->json([
             'message' => 'User registered successfully',
             'access_token' => $user->createToken("access token")->plainTextToken,
-            ], 201);
+        ], 201);
     }
 
     public function login(Request $request) : JsonResponse

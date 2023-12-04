@@ -12,7 +12,7 @@ use App\Http\Controllers\SubOrderController;
 use App\Http\Controllers\WishlistController;
 use Illuminate\Support\Facades\Route;
 
-
+// todo: make a table in database that keep every action users do, and save the id and the enum for the action type and the action resource
 
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/register-admin', [AuthController::class, 'registerAdmin']);

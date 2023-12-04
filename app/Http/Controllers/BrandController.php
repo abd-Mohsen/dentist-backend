@@ -73,7 +73,7 @@ class BrandController extends Controller
             'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048'
         ]);
 
-        $image = $data['image'] ? $this->uploadImage($request->file('image'), $data['title']) : null;
+        $image = array_key_exists('image', $data) ? $this->uploadImage($request->file('image'), $data['title']) : null;
         
         if($data['title']) $brand->title = $data['title']; 
         if($image) $brand->image_id = $image->id; 

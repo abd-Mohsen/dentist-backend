@@ -6,6 +6,7 @@ use App\Http\Resources\UserResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use App\Models\Image as ModelsImage;
+use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
@@ -16,6 +17,12 @@ class UserController extends Controller
     {
         $user = $request->user();
         return response()->json(new UserResource($user));
+    }
+
+    public function allUsers(Request $request) : JsonResponse
+    {
+        $users = User::all();
+        return response()->json(new UserResource($users));
     }
 
     public function uploadProfileImage(Request $request) : JsonResponse

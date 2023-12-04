@@ -10,6 +10,7 @@ use App\Models\Image as ImageModel;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Resources\CategoryResource;
+use App\Http\Resources\ProductResource;
 
 class CategoryController extends Controller
 {
@@ -79,8 +80,8 @@ class CategoryController extends Controller
     {
         $category = Category::with('parent')->findOrFail($id);
         return response()->json([
-            'products' => $category->products,
-            'sub_categories' => $category->children,
+            'products' => ProductResource::collection($category->products),
+            'sub_categories' => CategoryResource::collection($category->children),
         ]);
     }
 
@@ -97,7 +98,7 @@ class CategoryController extends Controller
             'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048'
         ]);
 
-        $image = $data['image'] ? $this->uploadImage($request->file('image'), $data['title']) : null;
+        $image = array_key_exists('image', $data) ? $this->uploadImage($request->file('image'), $data['title']) : null;
         
         if($data['title']) $category->title = $data['title']; 
         if($image) $category->image_id = $image->id; 

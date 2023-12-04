@@ -35,7 +35,7 @@ class CreateProductsTable extends Migration
             // do comment and rating (opinion) table
 
             $table->foreign('owner_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('brand_id')->references('id')->on('brands')->onDelete('cascade');
+            $table->foreign('brand_id')->references('id')->on('brands')->onDelete('set null');
         });
     }
 
