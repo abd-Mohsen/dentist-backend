@@ -12,7 +12,7 @@ use App\Http\Controllers\SubOrderController;
 use App\Http\Controllers\WishlistController;
 use Illuminate\Support\Facades\Route;
 
-// todo: make a table in database that keep every action users do, and save the id and the enum for the action type and the action resource
+// todo: make a table in database that keep every action users do, and save the user_id, id and the enum for the action type and the action resource
 
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/register-admin', [AuthController::class, 'registerAdmin']);
@@ -31,6 +31,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/verify-register-otp', [OTPController::class,'verifyRegisterOTP'])->middleware(['signed','throttle:3,1'])->name('verification.otp');
     Route::get('/logout', [AuthController::class, 'logout']);
     Route::get('/profile', [UserController::class, 'profile']);
+    Route::get('users/search/{query}', [UserController::class, 'search']);
     
     Route::get('/categories/all-children', [CategoryController::class, 'childCategories']);
     Route::get('/category-details/{category}', [CategoryController::class, 'categoryDetails']);

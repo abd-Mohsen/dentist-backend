@@ -23,6 +23,7 @@ return new class extends Migration
             $table->foreignIdFor(Role::class);
             $table->foreignIdFor(ImageModel::class)->nullable();
             $table->timestamps();
+            $table->softDeletes();
 
             $table->foreign('role_id')->references('id')->on('roles')->onDelete('cascade');
             $table->foreign('image_id')->references('id')->on('images')->onDelete('set null');

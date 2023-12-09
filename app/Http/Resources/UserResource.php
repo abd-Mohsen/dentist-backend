@@ -22,6 +22,7 @@ class UserResource extends JsonResource
             'image' => $this->image?->path,
             'role' => $this->role->title,
             'is_verified' => $this->hasVerifiedEmail(),
+            'created_at' => $this->created_at,
         ];
     }
 }

@@ -19,11 +19,15 @@ class UserController extends Controller
         return response()->json(new UserResource($user));
     }
 
+
+
     public function allUsers(Request $request) : JsonResponse
     {
         $users = User::all();
         return response()->json(new UserResource($users));
     }
+
+
 
     public function uploadProfileImage(Request $request) : JsonResponse
     {
@@ -46,6 +50,8 @@ class UserController extends Controller
         return response()->json(['image' => $image->path], 201);
     }
 
+
+
     public function editProfile(Request $request) : JsonResponse
     {
         $data = $request->validate([
@@ -61,6 +67,8 @@ class UserController extends Controller
 
         return response()->json(true);
     }
+
+
 
     public function editPassword(Request $request) : JsonResponse
     {
@@ -78,6 +86,15 @@ class UserController extends Controller
         $user->save();
         return response()->json(['message' => 'Password updated successfully']);
     }
+
+
+
+    public function search($query) : JsonResponse //to save bandwidth and memory, create a simpler resource 
+    { 
+        $users =  UserResource::collection(User::search($query)->get());
+        return response()->json($users);
+    }
+    
 }
 
 // middlewares (role) and policies
