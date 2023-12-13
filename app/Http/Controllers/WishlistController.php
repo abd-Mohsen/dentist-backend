@@ -36,7 +36,7 @@ class WishlistController extends Controller
                             ->where('product_id', $productId)
                             ->first();
         
-        if($wishlist) return response()->json(['message' => 'added successfully'], 201); 
+        if($wishlist) return response()->json(['message' => 'added successfully'], 201); // to avoid duplicates
 
         Wishlist::create([
             'user_id' => $userId,

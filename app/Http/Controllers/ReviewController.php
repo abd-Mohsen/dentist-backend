@@ -14,15 +14,15 @@ class ReviewController extends Controller
     {
         $this->authorize('viewAny', Review::class);
         $userId = $request->user()->id;
-        $wishlists = Review::where('user_id', $userId)->get();
-        return response()->json(ReviewResource::collection($wishlists));
+        $reviews = Review::where('user_id', $userId)->get();
+        return response()->json(ReviewResource::collection($reviews));
     }
 
     
 
     public function store(Request $request)
     {
-        $this->authorize('create', Wishlist::class);
+        $this->authorize('create', Review::class);
 
         $data = $request->validate([
             'product_id' => 'required|numeric',
@@ -40,7 +40,7 @@ class ReviewController extends Controller
                         ->where('product_id', $productId)
                         ->first();
         
-        if($review){
+        if($review){ // to avoid duplicates
             $review->fill($data); //test if user_id remains
             $review->save();
             return response()->json([
@@ -67,8 +67,8 @@ class ReviewController extends Controller
     public function destroy(string $id, Request $request)
     {
         $review = Review::where('user_id', $request->user()->id)
-                            ->where('product_id', $id)
-                            ->firstOrFail();
+                        ->where('product_id', $id)
+                        ->firstOrFail();
                             
         $this->authorize('delete', $review);
         $review->delete();
