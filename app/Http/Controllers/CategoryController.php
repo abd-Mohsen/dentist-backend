@@ -44,7 +44,7 @@ class CategoryController extends Controller
                 
         //to check if parent exists and eligible
         $parent = null;
-        if($data['parent']){
+        if(array_key_exists('parent', $data)){
             $parent = Category::where('title', $data['parent'])->first(); 
             if(!$parent) return response()->json(['message' => 'parent category does not exist'], 400);
             if($parent->parent) return response()->json(['message' => 'parent cannot be a child to another category'], 400);
