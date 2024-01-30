@@ -1,0 +1,1204 @@
+{
+    "client": "Thunder Client",
+    "collectionName": "medigear",
+    "dateExported": "2024-01-30T19:14:05.277Z",
+    "version": "1.1",
+    "folders": [
+        {
+            "_id": "b5437943-9286-402a-876a-b8203c266861",
+            "name": "auth",
+            "containerId": "",
+            "created": "2023-12-02T19:25:22.070Z",
+            "sortNum": 10000
+        },
+        {
+            "_id": "9d7bc180-4cdd-4096-acc2-4bafc3578611",
+            "name": "admin",
+            "containerId": "b5437943-9286-402a-876a-b8203c266861",
+            "created": "2023-12-02T19:25:57.547Z",
+            "sortNum": 20000
+        },
+        {
+            "_id": "7a7ea0d5-dad2-4ec6-a492-95c79e4d9d53",
+            "name": "user / profile",
+            "containerId": "",
+            "created": "2023-12-02T19:26:32.018Z",
+            "sortNum": 30000
+        },
+        {
+            "_id": "50cb73c9-2326-45a4-9691-173b5e7f2d8f",
+            "name": "otp",
+            "containerId": "",
+            "created": "2023-12-02T19:26:57.884Z",
+            "sortNum": 40000
+        },
+        {
+            "_id": "edfbe46f-67cb-4b0a-9974-7279233b8a5e",
+            "name": "brand",
+            "containerId": "",
+            "created": "2023-12-02T19:27:05.525Z",
+            "sortNum": 50000
+        },
+        {
+            "_id": "52fc37d1-2f76-4353-9660-989556bb9411",
+            "name": "category",
+            "containerId": "",
+            "created": "2023-12-02T19:27:14.743Z",
+            "sortNum": 60000
+        },
+        {
+            "_id": "41c4eab0-77d3-48a9-9ae3-910b0ed22b1c",
+            "name": "product",
+            "containerId": "",
+            "created": "2023-12-02T19:27:26.234Z",
+            "sortNum": 70000
+        },
+        {
+            "_id": "c69adea7-862d-47d4-bab8-eb6c2f93ffe4",
+            "name": "wishlist",
+            "containerId": "",
+            "created": "2023-12-02T19:28:17.654Z",
+            "sortNum": 80000
+        },
+        {
+            "_id": "35366968-fc0f-4055-8fb9-46d900a6fa4a",
+            "name": "review",
+            "containerId": "",
+            "created": "2023-12-02T19:28:30.365Z",
+            "sortNum": 90000
+        },
+        {
+            "_id": "1221f1b0-74d3-42d7-afdb-f059443656e6",
+            "name": "order",
+            "containerId": "",
+            "created": "2023-12-02T19:28:39.995Z",
+            "sortNum": 100000
+        },
+        {
+            "_id": "81abfc60-b802-4de2-a00f-05526aec9509",
+            "name": "sub order",
+            "containerId": "",
+            "created": "2023-12-02T19:28:49.024Z",
+            "sortNum": 110000
+        },
+        {
+            "_id": "0bb352a9-8fc4-44dc-af2b-f1acd9b24505",
+            "name": "action",
+            "containerId": "",
+            "created": "2023-12-02T19:31:00.938Z",
+            "sortNum": 120000
+        },
+        {
+            "_id": "84c4b0c2-9071-40c2-aaf0-62cb59a3cb5a",
+            "name": "admin",
+            "containerId": "edfbe46f-67cb-4b0a-9974-7279233b8a5e",
+            "created": "2023-12-02T20:15:42.259Z",
+            "sortNum": 130000
+        },
+        {
+            "_id": "6441fe44-9644-4f00-973e-ce1b3df06057",
+            "name": "admin",
+            "containerId": "52fc37d1-2f76-4353-9660-989556bb9411",
+            "created": "2023-12-04T14:42:30.693Z",
+            "sortNum": 140000
+        },
+        {
+            "_id": "86f866c6-87ee-49dd-b1bc-75a485073ba4",
+            "name": "admin",
+            "containerId": "7a7ea0d5-dad2-4ec6-a492-95c79e4d9d53",
+            "created": "2023-12-09T15:58:21.916Z",
+            "sortNum": 150000
+        }
+    ],
+    "requests": [
+        {
+            "_id": "4a734fd9-f978-486c-a0f5-fd94204dd31b",
+            "colId": "c8978e83-18b1-4a80-9185-555e5633a168",
+            "containerId": "b5437943-9286-402a-876a-b8203c266861",
+            "name": "login",
+            "url": "127.0.0.1:8000/api/login",
+            "method": "POST",
+            "sortNum": 10000,
+            "created": "2023-12-02T16:21:36.159Z",
+            "modified": "2023-12-22T18:28:28.436Z",
+            "headers": [
+                {
+                    "name": "Accept",
+                    "value": "application/json"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "formdata",
+                "raw": "",
+                "form": [
+                    {
+                        "name": "email",
+                        "value": "a1@m.co"
+                    },
+                    {
+                        "name": "password",
+                        "value": "12345678"
+                    }
+                ]
+            },
+            "tests": []
+        },
+        {
+            "_id": "db4ed4a9-2a1e-49ec-bd17-bb28b39e0102",
+            "colId": "c8978e83-18b1-4a80-9185-555e5633a168",
+            "containerId": "9d7bc180-4cdd-4096-acc2-4bafc3578611",
+            "name": "register / signup (admin)",
+            "url": "http://127.0.0.1:8000/api/register-admin",
+            "method": "POST",
+            "sortNum": 10000,
+            "created": "2023-12-02T19:19:19.251Z",
+            "modified": "2023-12-02T20:08:07.566Z",
+            "headers": [
+                {
+                    "name": "Accept",
+                    "value": "application/json"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n    \"name\": \"abd moh\",\n    \"email\": \"abb@m.com\",\n    \"password\": \"12345678\",\n    \"password_confirmation\":\"12345678\",\n    \"secret\":\"letMeInIAmAdminFRNocap\",\n    \"phone\":\"69420\",\n    \"role\":\"dentist\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "6af15cbc-c67f-4ec9-945f-907160d2af82",
+            "colId": "c8978e83-18b1-4a80-9185-555e5633a168",
+            "containerId": "7a7ea0d5-dad2-4ec6-a492-95c79e4d9d53",
+            "name": "current user profile",
+            "url": "http://127.0.0.1:8000/api/profile",
+            "method": "GET",
+            "sortNum": 10000,
+            "created": "2023-12-02T19:24:57.923Z",
+            "modified": "2023-12-02T19:24:57.923Z",
+            "headers": [
+                {
+                    "name": "Accept",
+                    "value": "application/json"
+                }
+            ],
+            "params": [],
+            "auth": {
+                "type": "bearer",
+                "bearer": "87|DYfQThBaB4ulhfghvOUcfSENq4nsCnsSXIWmt58Ecae4b46d"
+            },
+            "tests": []
+        },
+        {
+            "_id": "07a7ab1b-4007-45a7-87fd-48b755023dd0",
+            "colId": "c8978e83-18b1-4a80-9185-555e5633a168",
+            "containerId": "b5437943-9286-402a-876a-b8203c266861",
+            "name": "register / signup",
+            "url": "127.0.0.1:8000/api/register",
+            "method": "POST",
+            "sortNum": 20000,
+            "created": "2023-12-02T19:16:31.618Z",
+            "modified": "2023-12-02T20:07:56.112Z",
+            "headers": [
+                {
+                    "name": "Accept",
+                    "value": "application/json"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n    \"name\": \"abd moh\",\n    \"email\": \"a4@gmail.com\",\n    \"password\": \"12345678\",\n    \"password_confirmation\":\"12345678\",\n    \"phone\":\"69420\",\n    \"role\":\"supplier\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "e0516e6a-9a1e-408b-a189-f17952497e84",
+            "colId": "c8978e83-18b1-4a80-9185-555e5633a168",
+            "containerId": "b5437943-9286-402a-876a-b8203c266861",
+            "name": "logout",
+            "url": "127.0.0.1:8000/api/logout",
+            "method": "GET",
+            "sortNum": 30000,
+            "created": "2023-12-02T19:18:26.081Z",
+            "modified": "2023-12-02T19:18:52.534Z",
+            "headers": [
+                {
+                    "name": "Accept",
+                    "value": "application/json"
+                }
+            ],
+            "params": [],
+            "auth": {
+                "type": "bearer",
+                "bearer": "any"
+            },
+            "tests": []
+        },
+        {
+            "_id": "6f17dbcd-2980-4fa6-9141-7a40351e865d",
+            "colId": "c8978e83-18b1-4a80-9185-555e5633a168",
+            "containerId": "7a7ea0d5-dad2-4ec6-a492-95c79e4d9d53",
+            "name": "upload profile image",
+            "url": "127.0.0.1:8000/api/upload-profile-image",
+            "method": "POST",
+            "sortNum": 50000,
+            "created": "2023-12-02T19:50:17.266Z",
+            "modified": "2023-12-02T19:53:01.959Z",
+            "headers": [
+                {
+                    "name": "Accept",
+                    "value": "application/json"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "formdata",
+                "raw": "",
+                "form": [],
+                "files": [
+                    {
+                        "name": "image",
+                        "value": "c:\\Users\\ABD\\Pictures\\photo_2022-04-10_19-33-39.jpg"
+                    }
+                ]
+            },
+            "auth": {
+                "type": "bearer",
+                "bearer": "87|DYfQThBaB4ulhfghvOUcfSENq4nsCnsSXIWmt58Ecae4b46d"
+            },
+            "tests": []
+        },
+        {
+            "_id": "d17e2308-82d0-46ca-be4c-6c79590253c7",
+            "colId": "c8978e83-18b1-4a80-9185-555e5633a168",
+            "containerId": "7a7ea0d5-dad2-4ec6-a492-95c79e4d9d53",
+            "name": "edit profile",
+            "url": "http://127.0.0.1:8000/api/edit-profile",
+            "method": "POST",
+            "sortNum": 60000,
+            "created": "2023-12-02T19:54:00.542Z",
+            "modified": "2023-12-02T19:56:09.797Z",
+            "headers": [
+                {
+                    "name": "Accept",
+                    "value": "application/json"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"name\":\"puss\",\n  \"phone\":\"0000\"\n}",
+                "form": []
+            },
+            "auth": {
+                "type": "bearer",
+                "bearer": "87|DYfQThBaB4ulhfghvOUcfSENq4nsCnsSXIWmt58Ecae4b46d"
+            },
+            "tests": []
+        },
+        {
+            "_id": "8d7abe4a-55b9-4a78-a8a2-162c758cf966",
+            "colId": "c8978e83-18b1-4a80-9185-555e5633a168",
+            "containerId": "7a7ea0d5-dad2-4ec6-a492-95c79e4d9d53",
+            "name": "edit password",
+            "url": "http://127.0.0.1:8000/api/edit-password",
+            "method": "POST",
+            "sortNum": 70000,
+            "created": "2023-12-02T19:56:47.636Z",
+            "modified": "2023-12-02T19:57:40.962Z",
+            "headers": [
+                {
+                    "name": "Accept",
+                    "value": "application/json"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\r\n    \"current_password\":\"12345678\",\r\n    \"new_password\":\"12345678\"\r\n}",
+                "form": []
+            },
+            "auth": {
+                "type": "bearer",
+                "bearer": "87|DYfQThBaB4ulhfghvOUcfSENq4nsCnsSXIWmt58Ecae4b46d"
+            },
+            "tests": []
+        },
+        {
+            "_id": "3b151aea-4b91-4324-9d12-ebb2a681f9d0",
+            "colId": "c8978e83-18b1-4a80-9185-555e5633a168",
+            "containerId": "50cb73c9-2326-45a4-9691-173b5e7f2d8f",
+            "name": "send register otp",
+            "url": "http://127.0.0.1:8000/api/send-register-otp",
+            "method": "GET",
+            "sortNum": 80000,
+            "created": "2023-12-02T20:00:49.867Z",
+            "modified": "2023-12-02T20:01:41.370Z",
+            "headers": [
+                {
+                    "name": "Accept",
+                    "value": "application/json"
+                }
+            ],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "0bf3fca1-9324-4268-9c25-e354612da517",
+            "colId": "c8978e83-18b1-4a80-9185-555e5633a168",
+            "containerId": "50cb73c9-2326-45a4-9691-173b5e7f2d8f",
+            "name": "verify register otp",
+            "url": "http://127.0.0.1:8000/api/verify-register-otp?signature=e1a6c5e357b475bdc39fe29d7b08b95979789a83df46453038a9fab5d5028a10",
+            "method": "POST",
+            "sortNum": 100000,
+            "created": "2023-12-02T20:02:33.020Z",
+            "modified": "2023-12-02T20:03:39.004Z",
+            "headers": [
+                {
+                    "name": "Accept",
+                    "value": "application/json"
+                }
+            ],
+            "params": [
+                {
+                    "name": "signature",
+                    "value": "e1a6c5e357b475bdc39fe29d7b08b95979789a83df46453038a9fab5d5028a10",
+                    "isPath": false
+                }
+            ],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"otp\":\"\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "ff17ed0b-d6c3-49e0-808a-0f6dc7de417c",
+            "colId": "c8978e83-18b1-4a80-9185-555e5633a168",
+            "containerId": "50cb73c9-2326-45a4-9691-173b5e7f2d8f",
+            "name": "send reset otp",
+            "url": "http://127.0.0.1:8000/api/send-reset-otp",
+            "method": "POST",
+            "sortNum": 110000,
+            "created": "2023-12-02T20:04:03.056Z",
+            "modified": "2023-12-02T20:04:56.381Z",
+            "headers": [
+                {
+                    "name": "Accept",
+                    "value": "application/json"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"email\":\"e@m.co\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "939ec476-0578-4a91-ae2e-597c7c9fa69e",
+            "colId": "c8978e83-18b1-4a80-9185-555e5633a168",
+            "containerId": "50cb73c9-2326-45a4-9691-173b5e7f2d8f",
+            "name": "verify reset otp",
+            "url": "http://127.0.0.1:8000/api/verify-reset-otp",
+            "method": "POST",
+            "sortNum": 120000,
+            "created": "2023-12-02T20:06:15.217Z",
+            "modified": "2023-12-02T20:07:26.775Z",
+            "headers": [
+                {
+                    "name": "Accept",
+                    "value": "application/json"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\r\n    \"email\":\"e@m.co\",\r\n    \"otp\":\"42698\"\r\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "372f7dc3-1c82-4adb-a03f-70be4e4aefb0",
+            "colId": "c8978e83-18b1-4a80-9185-555e5633a168",
+            "containerId": "50cb73c9-2326-45a4-9691-173b5e7f2d8f",
+            "name": "reset password",
+            "url": "http://127.0.0.1:8000/api/reset-password",
+            "method": "POST",
+            "sortNum": 130000,
+            "created": "2023-12-02T20:08:28.137Z",
+            "modified": "2023-12-02T20:09:31.241Z",
+            "headers": [
+                {
+                    "name": "Accept",
+                    "value": "application/json"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\r\n    \"email\":\"e@m.com\",\r\n    \"password\":\"12345678\",\r\n    \"password_confirmation\":\"12345678\",\r\n    \"token\":\"f53ef83fb25712c2079843e226c3e340b690c36c0c05d1e1f88fce1c7c2c3a4f\"\r\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "82b8897a-2dce-49ca-9729-db21258fd86b",
+            "colId": "c8978e83-18b1-4a80-9185-555e5633a168",
+            "containerId": "84c4b0c2-9071-40c2-aaf0-62cb59a3cb5a",
+            "name": "add brand",
+            "url": "127.0.0.1:8000/api/brands",
+            "method": "POST",
+            "sortNum": 140000,
+            "created": "2023-12-02T20:15:53.150Z",
+            "modified": "2023-12-02T20:17:57.248Z",
+            "headers": [
+                {
+                    "name": "Accept",
+                    "value": "application/json"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "formdata",
+                "raw": "",
+                "form": [
+                    {
+                        "name": "title",
+                        "value": "b5shi"
+                    }
+                ],
+                "files": [
+                    {
+                        "name": "image",
+                        "value": "c:\\Users\\ABD\\Pictures\\Family Guy - S12E10 - Grimm Job.mp4_snapshot_12.48.033.jpg"
+                    }
+                ]
+            },
+            "auth": {
+                "type": "bearer",
+                "bearer": "87|DYfQThBaB4ulhfghvOUcfSENq4nsCnsSXIWmt58Ecae4b46d"
+            },
+            "tests": []
+        },
+        {
+            "_id": "f489d7ff-a48f-450c-bfca-aefda369c011",
+            "colId": "c8978e83-18b1-4a80-9185-555e5633a168",
+            "containerId": "84c4b0c2-9071-40c2-aaf0-62cb59a3cb5a",
+            "name": "edit brand",
+            "url": "http://127.0.0.1:8000/api/brands/3?_method=PATCH",
+            "method": "POST",
+            "sortNum": 150000,
+            "created": "2023-12-02T20:18:31.230Z",
+            "modified": "2023-12-02T20:33:10.880Z",
+            "headers": [
+                {
+                    "name": "Accept",
+                    "value": "application/json"
+                }
+            ],
+            "params": [
+                {
+                    "name": "_method",
+                    "value": "PATCH",
+                    "isPath": false
+                }
+            ],
+            "body": {
+                "type": "formdata",
+                "raw": "",
+                "form": [
+                    {
+                        "name": "title",
+                        "value": "peterr"
+                    }
+                ],
+                "files": [
+                    {
+                        "name": "image",
+                        "value": "c:\\Users\\ABD\\Pictures\\Family.Guy.S19E10.Fecal.Matters.720p.WEBRip.2CH.x265.HEVC-PSA.mkv_snapshot_12.59.011.jpg",
+                        "isDisabled": true
+                    }
+                ]
+            },
+            "auth": {
+                "type": "bearer",
+                "bearer": "87|DYfQThBaB4ulhfghvOUcfSENq4nsCnsSXIWmt58Ecae4b46d"
+            },
+            "tests": []
+        },
+        {
+            "_id": "ab765b04-cdee-4fe8-a162-1d5e06726ba7",
+            "colId": "c8978e83-18b1-4a80-9185-555e5633a168",
+            "containerId": "84c4b0c2-9071-40c2-aaf0-62cb59a3cb5a",
+            "name": "soft delete brand",
+            "url": "127.0.0.1:8000/api/brands/6",
+            "method": "DELETE",
+            "sortNum": 160000,
+            "created": "2023-12-03T15:15:23.845Z",
+            "modified": "2023-12-03T15:16:51.819Z",
+            "headers": [
+                {
+                    "name": "Accept",
+                    "value": "application/json"
+                }
+            ],
+            "params": [],
+            "auth": {
+                "type": "bearer",
+                "bearer": "87|DYfQThBaB4ulhfghvOUcfSENq4nsCnsSXIWmt58Ecae4b46d"
+            },
+            "tests": []
+        },
+        {
+            "_id": "1ba780bd-317b-4261-9e92-ebede1ef8f80",
+            "colId": "c8978e83-18b1-4a80-9185-555e5633a168",
+            "containerId": "edfbe46f-67cb-4b0a-9974-7279233b8a5e",
+            "name": "get all brands",
+            "url": "127.0.0.1:8000/api/brands",
+            "method": "GET",
+            "sortNum": 170000,
+            "created": "2023-12-03T15:18:28.930Z",
+            "modified": "2023-12-03T15:19:05.070Z",
+            "headers": [
+                {
+                    "name": "Accept",
+                    "value": "application/json"
+                }
+            ],
+            "params": [],
+            "auth": {
+                "type": "bearer",
+                "bearer": "87|DYfQThBaB4ulhfghvOUcfSENq4nsCnsSXIWmt58Ecae4b46d"
+            },
+            "tests": []
+        },
+        {
+            "_id": "a191d0aa-8471-42e4-9387-75a704051c28",
+            "colId": "c8978e83-18b1-4a80-9185-555e5633a168",
+            "containerId": "edfbe46f-67cb-4b0a-9974-7279233b8a5e",
+            "name": "show a brand",
+            "url": "127.0.0.1:8000/api/brands/5",
+            "method": "GET",
+            "sortNum": 180000,
+            "created": "2023-12-03T15:20:33.930Z",
+            "modified": "2023-12-03T15:21:04.589Z",
+            "headers": [
+                {
+                    "name": "Accept",
+                    "value": "application/json"
+                }
+            ],
+            "params": [],
+            "auth": {
+                "type": "bearer",
+                "bearer": "87|DYfQThBaB4ulhfghvOUcfSENq4nsCnsSXIWmt58Ecae4b46d"
+            },
+            "tests": []
+        },
+        {
+            "_id": "4c7b6034-ba85-4139-a30c-151f0a2e857f",
+            "colId": "c8978e83-18b1-4a80-9185-555e5633a168",
+            "containerId": "edfbe46f-67cb-4b0a-9974-7279233b8a5e",
+            "name": "products of a brand",
+            "url": "127.0.0.1:8000/api/brand-products/2",
+            "method": "GET",
+            "sortNum": 200000,
+            "created": "2023-12-03T15:21:56.442Z",
+            "modified": "2023-12-03T15:24:10.654Z",
+            "headers": [
+                {
+                    "name": "Accept",
+                    "value": "application/json"
+                }
+            ],
+            "params": [],
+            "auth": {
+                "type": "bearer",
+                "bearer": "87|DYfQThBaB4ulhfghvOUcfSENq4nsCnsSXIWmt58Ecae4b46d"
+            },
+            "tests": []
+        },
+        {
+            "_id": "86f26872-aade-46da-b09d-6125016d8dc3",
+            "colId": "c8978e83-18b1-4a80-9185-555e5633a168",
+            "containerId": "edfbe46f-67cb-4b0a-9974-7279233b8a5e",
+            "name": "search brand",
+            "url": "127.0.0.1:8000/api/brands/search/l",
+            "method": "GET",
+            "sortNum": 210000,
+            "created": "2023-12-03T15:24:51.326Z",
+            "modified": "2023-12-03T15:25:24.464Z",
+            "headers": [
+                {
+                    "name": "Accept",
+                    "value": "application/json"
+                }
+            ],
+            "params": [],
+            "auth": {
+                "type": "bearer",
+                "bearer": "87|DYfQThBaB4ulhfghvOUcfSENq4nsCnsSXIWmt58Ecae4b46d"
+            },
+            "tests": []
+        },
+        {
+            "_id": "93f0750e-da94-4865-8107-2ff8d8a1b05c",
+            "colId": "c8978e83-18b1-4a80-9185-555e5633a168",
+            "containerId": "6441fe44-9644-4f00-973e-ce1b3df06057",
+            "name": "add category",
+            "url": "127.0.0.1:8000/api/categories",
+            "method": "POST",
+            "sortNum": 220000,
+            "created": "2023-12-04T14:42:46.961Z",
+            "modified": "2023-12-04T14:46:49.082Z",
+            "headers": [
+                {
+                    "name": "Accept",
+                    "value": "application/json"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "formdata",
+                "raw": "",
+                "form": [
+                    {
+                        "name": "title",
+                        "value": "gta5"
+                    },
+                    {
+                        "name": "parent",
+                        "value": "cat1"
+                    }
+                ],
+                "files": [
+                    {
+                        "name": "image",
+                        "value": "c:\\Users\\ABD\\Pictures\\gtaV_art.jpg"
+                    }
+                ]
+            },
+            "auth": {
+                "type": "bearer",
+                "bearer": "87|DYfQThBaB4ulhfghvOUcfSENq4nsCnsSXIWmt58Ecae4b46d"
+            },
+            "tests": []
+        },
+        {
+            "_id": "89d10c8d-e6d7-496e-b2e1-e11b0ab1e1f3",
+            "colId": "c8978e83-18b1-4a80-9185-555e5633a168",
+            "containerId": "6441fe44-9644-4f00-973e-ce1b3df06057",
+            "name": "show category",
+            "url": "127.0.0.1:8000/api/categories/4",
+            "method": "GET",
+            "sortNum": 230000,
+            "created": "2023-12-04T15:09:53.361Z",
+            "modified": "2023-12-04T15:21:56.777Z",
+            "headers": [
+                {
+                    "name": "Accept",
+                    "value": "application/json"
+                }
+            ],
+            "params": [],
+            "auth": {
+                "type": "bearer",
+                "bearer": "87|DYfQThBaB4ulhfghvOUcfSENq4nsCnsSXIWmt58Ecae4b46d"
+            },
+            "tests": []
+        },
+        {
+            "_id": "678a407f-827d-4e0d-a2ca-99dfa154a4d1",
+            "colId": "c8978e83-18b1-4a80-9185-555e5633a168",
+            "containerId": "6441fe44-9644-4f00-973e-ce1b3df06057",
+            "name": "edit category",
+            "url": "127.0.0.1:8000/api/categories/5?_method=patch",
+            "method": "POST",
+            "sortNum": 240000,
+            "created": "2023-12-04T15:12:15.500Z",
+            "modified": "2023-12-04T15:19:21.133Z",
+            "headers": [
+                {
+                    "name": "Accept",
+                    "value": "application/json"
+                }
+            ],
+            "params": [
+                {
+                    "name": "_method",
+                    "value": "patch",
+                    "isPath": false
+                }
+            ],
+            "body": {
+                "type": "formdata",
+                "raw": "",
+                "form": [
+                    {
+                        "name": "title",
+                        "value": "gta sas"
+                    }
+                ],
+                "files": [
+                    {
+                        "name": "image",
+                        "value": "c:\\Users\\ABD\\Pictures\\gtav.jpg"
+                    }
+                ]
+            },
+            "auth": {
+                "type": "bearer",
+                "bearer": "87|DYfQThBaB4ulhfghvOUcfSENq4nsCnsSXIWmt58Ecae4b46d"
+            },
+            "tests": []
+        },
+        {
+            "_id": "c65f97de-277a-4950-8e68-931cde3547c3",
+            "colId": "c8978e83-18b1-4a80-9185-555e5633a168",
+            "containerId": "6441fe44-9644-4f00-973e-ce1b3df06057",
+            "name": "soft delete category",
+            "url": "127.0.0.1:8000/api/categories/4",
+            "method": "DELETE",
+            "sortNum": 250000,
+            "created": "2023-12-04T15:21:09.837Z",
+            "modified": "2023-12-04T15:21:43.489Z",
+            "headers": [
+                {
+                    "name": "Accept",
+                    "value": "application/json"
+                }
+            ],
+            "params": [],
+            "auth": {
+                "type": "bearer",
+                "bearer": "87|DYfQThBaB4ulhfghvOUcfSENq4nsCnsSXIWmt58Ecae4b46d"
+            },
+            "tests": []
+        },
+        {
+            "_id": "c6ad9c04-e234-40eb-9909-d4fa98abf347",
+            "colId": "c8978e83-18b1-4a80-9185-555e5633a168",
+            "containerId": "52fc37d1-2f76-4353-9660-989556bb9411",
+            "name": "get all main categories",
+            "url": "http://127.0.0.1:8000/api/categories",
+            "method": "GET",
+            "sortNum": 260000,
+            "created": "2023-12-04T15:24:22.090Z",
+            "modified": "2023-12-04T15:24:48.138Z",
+            "headers": [
+                {
+                    "name": "Accept",
+                    "value": "application/json"
+                }
+            ],
+            "params": [],
+            "auth": {
+                "type": "bearer",
+                "bearer": "87|DYfQThBaB4ulhfghvOUcfSENq4nsCnsSXIWmt58Ecae4b46d"
+            },
+            "tests": []
+        },
+        {
+            "_id": "eac4a4d2-6e76-4417-87b7-0f82ffdb2a88",
+            "colId": "c8978e83-18b1-4a80-9185-555e5633a168",
+            "containerId": "52fc37d1-2f76-4353-9660-989556bb9411",
+            "name": "get all sub-categories",
+            "url": "http://127.0.0.1:8000/api/categories/all-children",
+            "method": "GET",
+            "sortNum": 270000,
+            "created": "2023-12-04T15:26:49.018Z",
+            "modified": "2023-12-04T15:27:22.876Z",
+            "headers": [
+                {
+                    "name": "Accept",
+                    "value": "application/json"
+                }
+            ],
+            "params": [],
+            "auth": {
+                "type": "bearer",
+                "bearer": "87|DYfQThBaB4ulhfghvOUcfSENq4nsCnsSXIWmt58Ecae4b46d"
+            },
+            "tests": []
+        },
+        {
+            "_id": "d239ec26-6592-415c-b488-1474612a16a3",
+            "colId": "c8978e83-18b1-4a80-9185-555e5633a168",
+            "containerId": "52fc37d1-2f76-4353-9660-989556bb9411",
+            "name": "category details",
+            "url": "http://127.0.0.1:8000/api/category-details/1",
+            "method": "GET",
+            "sortNum": 280000,
+            "created": "2023-12-04T15:28:50.055Z",
+            "modified": "2023-12-22T18:29:02.749Z",
+            "headers": [
+                {
+                    "name": "Accept",
+                    "value": "application/json"
+                }
+            ],
+            "params": [],
+            "auth": {
+                "type": "bearer",
+                "bearer": "105|Gk05kAFkfqCZeVYcCwRyL4AdbMYCbYCUwZfLoefOf5c3055b"
+            },
+            "tests": []
+        },
+        {
+            "_id": "167ec19a-476f-4f6e-b6ab-97a8c9094e82",
+            "colId": "c8978e83-18b1-4a80-9185-555e5633a168",
+            "containerId": "52fc37d1-2f76-4353-9660-989556bb9411",
+            "name": "search category",
+            "url": "http://127.0.0.1:8000/api/categories/search/cat",
+            "method": "GET",
+            "sortNum": 290000,
+            "created": "2023-12-04T15:33:36.964Z",
+            "modified": "2023-12-04T15:34:23.110Z",
+            "headers": [
+                {
+                    "name": "Accept",
+                    "value": "application/json"
+                }
+            ],
+            "params": [],
+            "auth": {
+                "type": "bearer",
+                "bearer": "87|DYfQThBaB4ulhfghvOUcfSENq4nsCnsSXIWmt58Ecae4b46d"
+            },
+            "tests": []
+        },
+        {
+            "_id": "0b32016c-98e8-4957-97ed-88157bdb9d9c",
+            "colId": "c8978e83-18b1-4a80-9185-555e5633a168",
+            "containerId": "86f866c6-87ee-49dd-b1bc-75a485073ba4",
+            "name": "search user",
+            "url": "http://127.0.0.1:8000/api/users/search/m",
+            "method": "GET",
+            "sortNum": 310000,
+            "created": "2023-12-09T15:58:33.823Z",
+            "modified": "2023-12-09T16:59:27.308Z",
+            "headers": [
+                {
+                    "name": "Accept",
+                    "value": "application/json"
+                }
+            ],
+            "params": [],
+            "auth": {
+                "type": "bearer",
+                "bearer": "87|DYfQThBaB4ulhfghvOUcfSENq4nsCnsSXIWmt58Ecae4b46d"
+            },
+            "tests": []
+        },
+        {
+            "_id": "83eb5f09-a17d-4a6a-8b18-c0cefbbccc68",
+            "colId": "c8978e83-18b1-4a80-9185-555e5633a168",
+            "containerId": "41c4eab0-77d3-48a9-9ae3-910b0ed22b1c",
+            "name": "add product",
+            "url": "http://127.0.0.1:8000/api/products",
+            "method": "POST",
+            "sortNum": 320000,
+            "created": "2024-01-30T15:43:36.200Z",
+            "modified": "2024-01-30T16:12:59.733Z",
+            "headers": [
+                {
+                    "name": "Accept",
+                    "value": "application/json"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "formdata",
+                "raw": "",
+                "form": [
+                    {
+                        "name": "name",
+                        "value": "rdr1"
+                    },
+                    {
+                        "name": "description",
+                        "value": "a video game"
+                    },
+                    {
+                        "name": "upc",
+                        "value": "123456789100"
+                    },
+                    {
+                        "name": "brand",
+                        "value": "some brand"
+                    },
+                    {
+                        "name": "price",
+                        "value": "46.3"
+                    },
+                    {
+                        "name": "weight",
+                        "value": "10"
+                    },
+                    {
+                        "name": "length",
+                        "value": "5.6"
+                    },
+                    {
+                        "name": "width",
+                        "value": "1.2"
+                    },
+                    {
+                        "name": "height",
+                        "value": "0.5"
+                    },
+                    {
+                        "name": "quantity",
+                        "value": "1000"
+                    },
+                    {
+                        "name": "sell_quantity",
+                        "value": "400"
+                    },
+                    {
+                        "name": "max_purchase_qty",
+                        "value": "50"
+                    },
+                    {
+                        "name": "min_purchase_qty",
+                        "value": "2"
+                    },
+                    {
+                        "name": "categories[]",
+                        "value": "3"
+                    },
+                    {
+                        "name": "categories[]",
+                        "value": "5"
+                    },
+                    {
+                        "name": "active",
+                        "value": "1"
+                    },
+                    {
+                        "name": "owner_id",
+                        "value": "3"
+                    }
+                ],
+                "files": [
+                    {
+                        "name": "images[]",
+                        "value": "c:\\Users\\ABD\\Pictures\\john_marston___red_dead_redemption_2.jpg"
+                    }
+                ]
+            },
+            "auth": {
+                "type": "bearer",
+                "bearer": "116|VegQA7Fr023xSYRhgBvkhreka9SYRE5TM0iaugcNeb5c96fa"
+            },
+            "tests": []
+        },
+        {
+            "_id": "26c9bf54-5aa6-46b0-b950-849e7adbe435",
+            "colId": "c8978e83-18b1-4a80-9185-555e5633a168",
+            "containerId": "41c4eab0-77d3-48a9-9ae3-910b0ed22b1c",
+            "name": "edit product",
+            "url": "http://127.0.0.1:8000/api/products/5?_method=PATCH",
+            "method": "POST",
+            "sortNum": 330000,
+            "created": "2024-01-30T15:59:41.647Z",
+            "modified": "2024-01-30T18:10:51.585Z",
+            "headers": [
+                {
+                    "name": "Accept",
+                    "value": "application/json"
+                }
+            ],
+            "params": [
+                {
+                    "name": "_method",
+                    "value": "PATCH",
+                    "isPath": false
+                }
+            ],
+            "body": {
+                "type": "formdata",
+                "raw": "",
+                "form": [
+                    {
+                        "name": "name",
+                        "value": "dent"
+                    },
+                    {
+                        "name": "description",
+                        "value": "whfjhgkjgb"
+                    },
+                    {
+                        "name": "upc",
+                        "value": "1234567891000"
+                    },
+                    {
+                        "name": "brand",
+                        "value": "some brand"
+                    },
+                    {
+                        "name": "price",
+                        "value": "1000"
+                    },
+                    {
+                        "name": "weight",
+                        "value": "10"
+                    },
+                    {
+                        "name": "length",
+                        "value": "5"
+                    },
+                    {
+                        "name": "width",
+                        "value": "4"
+                    },
+                    {
+                        "name": "height",
+                        "value": "4 "
+                    },
+                    {
+                        "name": "quantity",
+                        "value": "100"
+                    },
+                    {
+                        "name": "sell_quantity",
+                        "value": "8"
+                    },
+                    {
+                        "name": "max_purchase_qty",
+                        "value": "8"
+                    },
+                    {
+                        "name": "min_purchase_qty",
+                        "value": "2"
+                    },
+                    {
+                        "name": "active",
+                        "value": "0"
+                    },
+                    {
+                        "name": "categories[]",
+                        "value": "3"
+                    },
+                    {
+                        "name": " categories[] ",
+                        "value": "",
+                        "isDisabled": true
+                    }
+                ],
+                "files": [
+                    {
+                        "name": "images[]",
+                        "value": "c:\\Users\\ABD\\Pictures\\arthur weight.PNG",
+                        "isDisabled": true
+                    }
+                ]
+            },
+            "auth": {
+                "type": "bearer",
+                "bearer": "116|VegQA7Fr023xSYRhgBvkhreka9SYRE5TM0iaugcNeb5c96fa"
+            },
+            "tests": []
+        },
+        {
+            "_id": "944498e9-0b35-4cf0-945c-6deb1fabc166",
+            "colId": "c8978e83-18b1-4a80-9185-555e5633a168",
+            "containerId": "41c4eab0-77d3-48a9-9ae3-910b0ed22b1c",
+            "name": "show all products",
+            "url": "http://127.0.0.1:8000/api/products",
+            "method": "GET",
+            "sortNum": 340000,
+            "created": "2024-01-30T19:09:08.971Z",
+            "modified": "2024-01-30T19:09:41.457Z",
+            "headers": [
+                {
+                    "name": "Accept",
+                    "value": "application/json"
+                }
+            ],
+            "params": [],
+            "auth": {
+                "type": "bearer",
+                "bearer": "116|VegQA7Fr023xSYRhgBvkhreka9SYRE5TM0iaugcNeb5c96fa"
+            },
+            "tests": []
+        },
+        {
+            "_id": "71b84e34-6c7d-4fe9-b8f8-f564cdc20056",
+            "colId": "c8978e83-18b1-4a80-9185-555e5633a168",
+            "containerId": "41c4eab0-77d3-48a9-9ae3-910b0ed22b1c",
+            "name": "show product",
+            "url": "http://127.0.0.1:8000/api/products/1",
+            "method": "GET",
+            "sortNum": 350000,
+            "created": "2024-01-30T19:10:00.334Z",
+            "modified": "2024-01-30T19:10:22.142Z",
+            "headers": [
+                {
+                    "name": "Accept",
+                    "value": "application/json"
+                }
+            ],
+            "params": [],
+            "auth": {
+                "type": "bearer",
+                "bearer": "116|VegQA7Fr023xSYRhgBvkhreka9SYRE5TM0iaugcNeb5c96fa"
+            },
+            "tests": []
+        },
+        {
+            "_id": "62b3ad66-0998-449a-8737-0cf841972f51",
+            "colId": "c8978e83-18b1-4a80-9185-555e5633a168",
+            "containerId": "41c4eab0-77d3-48a9-9ae3-910b0ed22b1c",
+            "name": "search product",
+            "url": "http://127.0.0.1:8000/api/products/search/r",
+            "method": "GET",
+            "sortNum": 360000,
+            "created": "2024-01-30T19:11:07.408Z",
+            "modified": "2024-01-30T19:11:36.875Z",
+            "headers": [
+                {
+                    "name": "Accept",
+                    "value": "application/json"
+                }
+            ],
+            "params": [],
+            "auth": {
+                "type": "bearer",
+                "bearer": "116|VegQA7Fr023xSYRhgBvkhreka9SYRE5TM0iaugcNeb5c96fa"
+            },
+            "tests": []
+        },
+        {
+            "_id": "0df34836-ef28-4864-aaf2-5f21f1e4a5c7",
+            "colId": "c8978e83-18b1-4a80-9185-555e5633a168",
+            "containerId": "41c4eab0-77d3-48a9-9ae3-910b0ed22b1c",
+            "name": "delete product",
+            "url": "http://127.0.0.1:8000/api/products/5",
+            "method": "DELETE",
+            "sortNum": 370000,
+            "created": "2024-01-30T19:12:37.879Z",
+            "modified": "2024-01-30T19:13:32.333Z",
+            "headers": [
+                {
+                    "name": "Accept",
+                    "value": "application/json"
+                }
+            ],
+            "params": [],
+            "auth": {
+                "type": "bearer",
+                "bearer": "116|VegQA7Fr023xSYRhgBvkhreka9SYRE5TM0iaugcNeb5c96fa"
+            },
+            "tests": []
+        }
+    ]
+}

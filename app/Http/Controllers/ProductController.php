@@ -44,6 +44,7 @@ class ProductController extends Controller
             'max_purchase_qty' => 'required|numeric|min:0',
             'min_purchase_qty' => 'required|numeric|min:0',
             'active' => 'required|bool',
+            'owner_id' => 'required|numeric|min:1',
             'categories' => 'required|array',
             'categories.*' => 'required|numeric|min:1',
             'images' => 'required|array',
@@ -86,7 +87,7 @@ class ProductController extends Controller
             'max_purchase_qty' => $data['max_purchase_qty'],
             'min_purchase_qty' => $data['min_purchase_qty'],
             'active' => $data['active'],
-            'owner_id' => $user->id,
+            'owner_id' => $data['owner_id'],
             'brand_id' => $brand->id,
         ]);
 
@@ -148,8 +149,8 @@ class ProductController extends Controller
         }
         
         $data = array_filter($data, fn($value) => $value != null);
-    
-        $imagesIds = $this->uploadImages($request->file('images'), $data['name']);
+        
+        $imagesIds = array_key_exists('images', $data) ? $this->uploadImages($request->file('images'), $data['name']) : [];
         $categoriesIds = $data['categories'];
 
         if($categoriesIds){
